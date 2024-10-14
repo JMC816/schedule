@@ -11,7 +11,7 @@ import { usePathname } from "next/navigation";
 export default function Footer() {
   const pathname = usePathname();
   return (
-    <div className="fixed bottom-0 flex justify-around w-full h-16 max-w-sm bg-neutral-700">
+    <div className="fixed bottom-0 flex justify-around w-full h-16 bg-neutral-700">
       <div
         className={`flex items-center justify-center w-full ${
           pathname === "/" ? "bg-neutral-500" : "bg-neutral-700"
