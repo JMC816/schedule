@@ -30,9 +30,7 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body
-        className={`${inter.className} mx-auto max-w-sm bg-neutral-800 text-white `}
-      >
+      <body className={`${inter.className} mx-auto bg-neutral-800 text-white `}>
         {children}
         <Footer />
       </body>
