@@ -26,6 +26,9 @@ export default function ToDoList() {
 
   const onSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
+    if (value === "") {
+      return;
+    }
     setToDo((prev) => [...prev, value]);
     setValue("");
   };
@@ -45,7 +48,7 @@ export default function ToDoList() {
         {toDo.map((todos, index) => (
           <div
             key={index}
-            className="flex items-center justify-between h-5 gap-1 px-2 py-6 mb-5 bg-white border border-white rounded-md"
+            className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
           >
             <Checkbox />
             <span className="w-full pl-1 text-black">{todos}</span>
