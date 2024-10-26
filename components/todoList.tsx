@@ -5,19 +5,12 @@ import { Button } from "./ui/button";
 import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
 import React, { useState } from "react";
+import useStore from "@/store";
 
 export default function ToDoList() {
+  const { date } = useStore((state) => state);
   const [value, setValue] = useState("");
   const [toDo, setToDo] = useState<string[]>([]);
-
-  const getDate = () => {
-    const today = new Date();
-    const year = today.getFullYear();
-    const month = (today.getMonth() + 1).toString().padStart(2, "0");
-    const day = today.getDate().toString().padStart(2, "0");
-    const dateString = year + "-" + month + "-" + day;
-    return dateString;
-  };
 
   const onChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const { value } = e.target;
@@ -35,7 +28,7 @@ export default function ToDoList() {
   return (
     <>
       <div className="px-5 py-2 mb-[85px] ml-5 mr-5 border border-white rounded-md ">
-        <div className="mb-2 text-center">{getDate()}</div>
+        <div className="mb-2 text-center">{date}</div>
         <form className="flex gap-1 mb-5" onSubmit={onSubmit}>
           <Input onChange={onChange} value={value} />
           <Button className="border border-white">입력</Button>
