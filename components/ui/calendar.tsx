@@ -7,6 +7,7 @@ import { DayPicker } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { createToDos } from "@/app/actions";
+import useStore from "@/store";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -16,11 +17,13 @@ function Calendar({
   showOutsideDays = true,
   ...props
 }: CalendarProps) {
+  const setDate = useStore((state) => state.setDate);
+
   const onClickDay = (day: Date) => {
     const newDate = day.toLocaleDateString();
     createToDos(newDate.replace(/\./g, "").split(" ").join(""));
+    setDate(newDate.replace(/\./g, "").split(" ").join(""));
   };
-
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
