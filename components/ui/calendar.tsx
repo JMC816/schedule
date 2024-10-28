@@ -6,7 +6,7 @@ import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
-import { createToDos } from "@/app/actions";
+import { createToDo } from "@/app/actions";
 import useStore from "@/store";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
@@ -21,7 +21,7 @@ function Calendar({
 
   const onClickDay = (day: Date) => {
     const newDate = day.toLocaleDateString();
-    createToDos(newDate.replace(/\./g, "").split(" ").join(""));
+    createToDo(newDate.replace(/\./g, "").split(" ").join(""));
     setDate(newDate.replace(/\./g, "").split(" ").join(""));
   };
   return (
