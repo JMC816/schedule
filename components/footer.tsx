@@ -18,7 +18,10 @@ export default function Footer() {
         }`}
       >
         <Link href="/">
-          <CalendarDateRangeIcon className="w-11 " />
+          <div className="flex flex-col items-center">
+            <CalendarDateRangeIcon className="w-8 " />
+            <span className="text-sm">할 일</span>
+          </div>
         </Link>
       </div>
       <div
@@ -27,7 +30,10 @@ export default function Footer() {
         }`}
       >
         <Link href="/schedule">
-          <CalendarIcon className="w-11" />
+          <div className="flex flex-col items-center">
+            <CalendarIcon className="w-8" />
+            <span className="text-sm">캘린더</span>
+          </div>
         </Link>
       </div>
       <div
@@ -36,7 +42,10 @@ export default function Footer() {
         }`}
       >
         <Link href="/set">
-          <Cog6ToothIcon className="w-11" />
+          <div className="flex flex-col items-center">
+            <Cog6ToothIcon className="w-8" />
+            <span className="text-sm">설정</span>
+          </div>
         </Link>
       </div>
     </div>
