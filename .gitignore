@@ -39,3 +39,7 @@ next-env.d.ts
 /public/workbox-*.js*
 
 .env
+
+*.db
+*.db-journal
+/prisma/migrations
