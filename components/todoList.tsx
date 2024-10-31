@@ -6,12 +6,7 @@ import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
 import React, { useEffect } from "react";
 import useStore from "@/store";
-import {
-  deleteTodos,
-  getTodos,
-  initializeTodaysTodo,
-  uploadTodos,
-} from "@/app/actions";
+import { deleteTodos, initializeTodaysTodo, uploadTodos } from "@/app/actions";
 
 interface TodosProps {
   todos: {
@@ -45,9 +40,8 @@ export default function ToDoList({ todos }: TodosProps) {
   };
 
   const onDelete = async (id: number) => {
-    const todoss = await getTodos();
-    todoss.map(async (todos) => {
-      if (todos.id === id) {
+    todos.map(async (todo) => {
+      if (todo.id === id) {
         await deleteTodos(id);
       }
     });
