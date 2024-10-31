@@ -45,3 +45,15 @@ export async function getTodos() {
 export async function initializeTodaysTodo(today: string) {
   await createToDo(today);
 }
+
+export async function deleteTodos(id: number) {
+  if (!id) {
+    return;
+  }
+  await db.toDos.deleteMany({
+    where: {
+      id,
+    },
+  });
+  revalidatePath("/");
+}
