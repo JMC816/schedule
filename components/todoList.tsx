@@ -76,7 +76,7 @@ export default function ToDoList({ todos }: TodosProps) {
               <Checkbox />
               <span className="w-full pl-1 text-black">{todo.text}</span>
               <TrashIcon
-                className="h-6 text-black"
+                className="h-6 text-black cursor-pointer"
                 onClick={() => onDelete(todo.id)}
               />
             </div>
