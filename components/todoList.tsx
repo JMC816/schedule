@@ -6,7 +6,12 @@ import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
 import React, { useEffect } from "react";
 import useStore from "@/store";
-import { initializeTodaysTodo, uploadTodos } from "@/app/actions";
+import {
+  deleteTodos,
+  getTodos,
+  initializeTodaysTodo,
+  uploadTodos,
+} from "@/app/actions";
 
 interface TodosProps {
   todos: {
@@ -38,6 +43,15 @@ export default function ToDoList({ todos }: TodosProps) {
     const formData = new FormData(e.currentTarget);
     await uploadTodos(formData, date);
   };
+
+  const onDelete = async (id: number) => {
+    const todoss = await getTodos();
+    todoss.map(async (todos) => {
+      if (todos.id === id) {
+        await deleteTodos(id);
+      }
+    });
+  };
   return (
     <>
       <div className="px-5 py-2 mb-[85px] ml-5 mr-5 border border-white rounded-md ">
@@ -61,7 +75,10 @@ export default function ToDoList({ todos }: TodosProps) {
             >
               <Checkbox />
               <span className="w-full pl-1 text-black">{todo.text}</span>
-              <TrashIcon className="h-6 text-black" />
+              <TrashIcon
+                className="h-6 text-black"
+                onClick={() => onDelete(todo.id)}
+              />
             </div>
           ))
         )}
