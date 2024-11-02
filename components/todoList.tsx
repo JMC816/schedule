@@ -19,6 +19,14 @@ interface TodosProps {
 export default function ToDoList({ todos }: TodosProps) {
   const { date, setDate } = useStore((state) => state);
 
+  const formatDate = () => {
+    const year = date.slice(0, 4);
+    const month = date.slice(4, 6);
+    const day = date.slice(6, 8);
+
+    return `${year}-${month}-${day}`;
+  };
+
   useEffect(() => {
     if (!date) {
       const today = new Date()
@@ -49,7 +57,7 @@ export default function ToDoList({ todos }: TodosProps) {
   return (
     <>
       <div className="px-5 py-2 mb-[85px] ml-5 mr-5 border border-white rounded-md ">
-        <div className="mb-2 text-center">{date}</div>
+        <div className="mb-2 text-center">{formatDate()}</div>
         <form onSubmit={onSubmit} className="flex gap-1 mb-5">
           <Input name="todo" type="text" />
           <Button className="border border-white">입력</Button>
