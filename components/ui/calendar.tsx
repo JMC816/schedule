@@ -8,13 +8,15 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { createToDo } from "@/app/actions";
 import useStore from "@/store";
+import { TodosProps } from "../todoList";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+export type CalendarProps = React.ComponentProps<typeof DayPicker> & TodosProps;
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  todos,
   ...props
 }: CalendarProps) {
   const setDate = useStore((state) => state.setDate);
@@ -24,8 +26,52 @@ function Calendar({
     createToDo(newDate.replace(/\./g, "").split(" ").join(""));
     setDate(newDate.replace(/\./g, "").split(" ").join(""));
   };
+
+  const individualDate = todos.reduce<Record<string, number>>((acc, todo) => {
+    const year = String(todo.toDoId).slice(0, 4);
+    const month = String(todo.toDoId).slice(4, 6).padStart(2, "0");
+    const day = String(todo.toDoId).slice(6, 8).padStart(2, "0");
+    const dateKey = `${year}-${month}-${day}`;
+    acc[dateKey] = (acc[dateKey] || 0) + 1;
+    return acc;
+  }, {});
+
   return (
     <DayPicker
+      modifiers={{
+        own: (date) => {
+          const dateKey = date.toLocaleDateString("en-CA");
+          return individualDate[dateKey] == 1;
+        },
+        two: (date) => {
+          const dateKey = date.toLocaleDateString("en-CA");
+          return individualDate[dateKey] == 2;
+        },
+        three: (date) => {
+          const dateKey = date.toLocaleDateString("en-CA");
+          return individualDate[dateKey] == 3;
+        },
+        four: (date) => {
+          const dateKey = date.toLocaleDateString("en-CA");
+          return individualDate[dateKey] == 4;
+        },
+        five: (date) => {
+          const dateKey = date.toLocaleDateString("en-CA");
+          return individualDate[dateKey] == 5;
+        },
+        six: (date) => {
+          const dateKey = date.toLocaleDateString("en-CA");
+          return individualDate[dateKey] >= 6;
+        },
+      }}
+      modifiersClassNames={{
+        own: "bg-green-100",
+        two: "bg-green-300",
+        three: "bg-green-500",
+        four: "bg-green-700",
+        five: "bg-green-900",
+        six: "bg-green-950",
+      }}
       showOutsideDays={showOutsideDays}
       className={cn("p-3", className)}
       classNames={{
