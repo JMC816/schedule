@@ -8,7 +8,7 @@ import React, { useEffect } from "react";
 import useStore from "@/store";
 import { deleteTodos, initializeTodaysTodo, uploadTodos } from "@/app/actions";
 
-interface TodosProps {
+export interface TodosProps {
   todos: {
     id: number;
     text: string;
