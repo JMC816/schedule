@@ -6,7 +6,10 @@ export default async function ToDo() {
   const todos = await getTodos();
   return (
     <div className="overflow-auto ">
-      <Calendar todos={todos} className="m-5 border rounded-md "></Calendar>
+      <Calendar
+        todos={todos}
+        className="flex justify-center m-5 border rounded-md "
+      />
       <ToDoList todos={todos} />
     </div>
   );
