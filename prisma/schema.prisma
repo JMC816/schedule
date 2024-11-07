@@ -8,11 +8,19 @@ datasource db {
 }
 
 model ToDo {
-  id    Int     @id @default(autoincrement())
-  ToDos ToDos[]
+  id           Int            @id @default(autoincrement())
+  ToDos        ToDos[]
+  CheckedTodos CheckedTodos[]
 }
 
 model ToDos {
+  id     Int    @id @default(autoincrement())
+  text   String
+  todo   ToDo   @relation(fields: [toDoId], references: [id])
+  toDoId Int
+}
+
+model CheckedTodos {
   id     Int    @id @default(autoincrement())
   text   String
   todo   ToDo   @relation(fields: [toDoId], references: [id])
