@@ -1,5 +1,7 @@
 "use server";
 
+import { CheckedProps } from "@/components/todoList";
+
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
@@ -56,4 +58,25 @@ export async function deleteTodos(id: number) {
     },
   });
   revalidatePath("/");
+}
+
+export async function checkedTodos(todo: CheckedProps) {
+  try {
+    const existCompletedTodos = await db.checkedTodos.findMany({
+      where: {
+        id: todo.id,
+      },
+    });
+    if (existCompletedTodos.length === 0) {
+      await db.checkedTodos.create({
+        data: {
+          id: todo.id,
+          text: todo.text,
+          toDoId: todo.toDoId,
+        },
+      });
+    }
+  } catch (e) {
+    console.log(e);
+  }
 }
