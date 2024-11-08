@@ -19,6 +19,11 @@ export interface ToDosProps {
     text: string;
     toDoId: number;
   }[];
+  completedTodos: {
+    id: number;
+    text: string;
+    toDoId: number;
+  }[];
 }
 
 export interface CheckedProps {
@@ -27,15 +32,14 @@ export interface CheckedProps {
   toDoId: number;
 }
 
-export interface CheckedTodosProps {}
-export default function ToDoList({ todos }: ToDosProps) {
+export default function ToDoList({ todos, completedTodos }: ToDosProps) {
   const { date, setDate } = useStore((state) => state);
   const [value, setValue] = useState<string>("");
+
   const formatDate = () => {
     const year = date.slice(0, 4);
     const month = date.slice(4, 6);
     const day = date.slice(6, 8);
-
     return `${year}-${month}-${day}`;
   };
 
@@ -51,7 +55,12 @@ export default function ToDoList({ todos }: ToDosProps) {
     }
   }, [date, setDate]);
 
-  const filteredTodo = todos.filter((todo) => todo.toDoId === parseInt(date));
+  const filteredTodos = todos.filter(
+    (todos) => todos.toDoId === parseInt(date)
+  );
+  const filteredCompletedTodos = completedTodos.filter(
+    (todos) => todos.toDoId === parseInt(date)
+  );
 
   const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
@@ -75,7 +84,7 @@ export default function ToDoList({ todos }: ToDosProps) {
     setValue(e.target.value);
   };
 
-  const movedTodos = async (todo: CheckedProps) => {
+  const onCheckedTodos = async (todo: CheckedProps) => {
     await checkedTodos(todo);
   };
 
@@ -92,19 +101,41 @@ export default function ToDoList({ todos }: ToDosProps) {
           <TrashIcon className="h-6 text-white" />
         </div>
         <div className="flex mb-4 border border-white rounded-md"></div>
-        {filteredTodo.length === 0 ? (
-          <div className="text-center text-gray-500">할 일이 없습니다.</div>
+        {filteredTodos.length === 0 ? (
+          <div className="mb-4 text-center text-gray-500">
+            할 일이 없습니다.
+          </div>
         ) : (
-          filteredTodo.map((todo) => (
+          filteredTodos.map((todos) => (
             <div
-              key={`${todo.toDoId}-${todo.id}`}
+              key={`${todos.toDoId}-${todos.id}`}
               className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
             >
-              <input type="checkbox" onChange={() => movedTodos(todo)} />
-              <span className="w-full pl-1 text-black">{todo.text}</span>
+              <input type="checkbox" onChange={() => onCheckedTodos(todos)} />
+              <span className="w-full pl-1 text-black">{todos.text}</span>
               <TrashIcon
                 className="h-6 text-black cursor-pointer"
-                onClick={() => onDelete(todo.id)}
+                onClick={() => onDelete(todos.id)}
+              />
+            </div>
+          ))
+        )}
+        <div className="flex mb-4 border border-white rounded-md"></div>
+        {filteredCompletedTodos.length === 0 ? (
+          <div className="text-center text-gray-500">완료한 일이 없습니다.</div>
+        ) : (
+          filteredCompletedTodos.map((todos) => (
+            <div
+              key={`${todos.toDoId}-${todos.id}`}
+              className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
+            >
+              <input type="checkbox" />
+              <span className="w-full pl-1 text-gray-400 line-through">
+                {todos.text}
+              </span>
+              <TrashIcon
+                className="h-6 text-black cursor-pointer"
+                onClick={() => onDelete(todos.id)}
               />
             </div>
           ))
