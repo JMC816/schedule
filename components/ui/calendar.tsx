@@ -8,15 +8,18 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { createToDo } from "@/app/actions";
 import useStore from "@/store";
-import { TodosProps } from "../todoList";
+import { ToDosProps } from "../todoList";
 
-export type CalendarProps = React.ComponentProps<typeof DayPicker> & TodosProps;
+type MyTodosProps = Pick<ToDosProps, "completedTodos">;
+
+export type CalendarProps = React.ComponentProps<typeof DayPicker> &
+  MyTodosProps;
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
-  todos,
+  completedTodos,
   ...props
 }: CalendarProps) {
   const setDate = useStore((state) => state.setDate);
@@ -27,14 +30,17 @@ function Calendar({
     setDate(newDate.replace(/\./g, "").split(" ").join(""));
   };
 
-  const individualDate = todos.reduce<Record<string, number>>((acc, todo) => {
-    const year = String(todo.toDoId).slice(0, 4);
-    const month = String(todo.toDoId).slice(4, 6).padStart(2, "0");
-    const day = String(todo.toDoId).slice(6, 8).padStart(2, "0");
-    const dateKey = `${year}-${month}-${day}`;
-    acc[dateKey] = (acc[dateKey] || 0) + 1;
-    return acc;
-  }, {});
+  const individualDate = completedTodos.reduce<Record<string, number>>(
+    (acc, todo) => {
+      const year = String(todo.toDoId).slice(0, 4);
+      const month = String(todo.toDoId).slice(4, 6).padStart(2, "0");
+      const day = String(todo.toDoId).slice(6, 8).padStart(2, "0");
+      const dateKey = `${year}-${month}-${day}`;
+      acc[dateKey] = (acc[dateKey] || 0) + 1;
+      return acc;
+    },
+    {}
+  );
 
   return (
     <DayPicker
