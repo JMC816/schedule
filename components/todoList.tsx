@@ -6,9 +6,14 @@ import { Checkbox } from "./ui/checkbox";
 import { Input } from "./ui/input";
 import React, { useEffect, useState } from "react";
 import useStore from "@/store";
-import { deleteTodos, initializeTodaysTodo, uploadTodos } from "@/app/actions";
+import {
+  checkedTodos,
+  deleteTodos,
+  initializeTodaysTodo,
+  uploadTodos,
+} from "@/app/actions";
 
-export interface TodosProps {
+export interface ToDosProps {
   todos: {
     id: number;
     text: string;
@@ -16,10 +21,16 @@ export interface TodosProps {
   }[];
 }
 
-export default function ToDoList({ todos }: TodosProps) {
+export interface CheckedProps {
+  id: number;
+  text: string;
+  toDoId: number;
+}
+
+export interface CheckedTodosProps {}
+export default function ToDoList({ todos }: ToDosProps) {
   const { date, setDate } = useStore((state) => state);
   const [value, setValue] = useState<string>("");
-
   const formatDate = () => {
     const year = date.slice(0, 4);
     const month = date.slice(4, 6);
@@ -63,6 +74,11 @@ export default function ToDoList({ todos }: TodosProps) {
   const onChage = (e: React.ChangeEvent<HTMLInputElement>) => {
     setValue(e.target.value);
   };
+
+  const movedTodos = async (todo: CheckedProps) => {
+    await checkedTodos(todo);
+  };
+
   return (
     <>
       <div className="px-5 py-2 mb-[85px] ml-5 mr-5 border border-white rounded-md ">
@@ -84,7 +100,7 @@ export default function ToDoList({ todos }: TodosProps) {
               key={`${todo.toDoId}-${todo.id}`}
               className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
             >
-              <Checkbox />
+              <input type="checkbox" onChange={() => movedTodos(todo)} />
               <span className="w-full pl-1 text-black">{todo.text}</span>
               <TrashIcon
                 className="h-6 text-black cursor-pointer"
