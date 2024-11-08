@@ -79,4 +79,10 @@ export async function checkedTodos(todo: CheckedProps) {
   } catch (e) {
     console.log(e);
   }
+  revalidatePath("/");
+}
+
+export async function getCompletedTodos() {
+  const completedTodos = await db.checkedTodos.findMany();
+  return completedTodos;
 }
