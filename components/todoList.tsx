@@ -8,6 +8,7 @@ import React, { useEffect, useState } from "react";
 import useStore from "@/store";
 import {
   checkedTodos,
+  deleteCompletedTodos,
   deleteTodos,
   initializeTodaysTodo,
   uploadTodos,
@@ -72,9 +73,9 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
     setValue("");
   };
 
-  const onDelete = async (id: number) => {
-    todos.map(async (todo) => {
-      if (todo.id === id) {
+  const onDeleteTodos = async (id: number) => {
+    todos.map(async (todos) => {
+      if (todos.id === id) {
         await deleteTodos(id);
       }
     });
@@ -86,6 +87,14 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
 
   const onCheckedTodos = async (todo: CheckedProps) => {
     await checkedTodos(todo);
+  };
+
+  const onDeleteCompletedTodos = async (id: number) => {
+    completedTodos.map(async (todos) => {
+      if (todos.id == id) {
+        await deleteCompletedTodos(id);
+      }
+    });
   };
 
   return (
@@ -115,7 +124,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
               <span className="w-full pl-1 text-black">{todos.text}</span>
               <TrashIcon
                 className="h-6 text-black cursor-pointer"
-                onClick={() => onDelete(todos.id)}
+                onClick={() => onDeleteTodos(todos.id)}
               />
             </div>
           ))
@@ -129,13 +138,13 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
               key={`${todos.toDoId}-${todos.id}`}
               className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
             >
-              <input type="checkbox" />
+              <input type="checkbox" checked={true} />
               <span className="w-full pl-1 text-gray-400 line-through">
                 {todos.text}
               </span>
               <TrashIcon
                 className="h-6 text-black cursor-pointer"
-                onClick={() => onDelete(todos.id)}
+                onClick={() => onDeleteCompletedTodos(todos.id)}
               />
             </div>
           ))
