@@ -62,6 +62,11 @@ export async function deleteTodos(id: number) {
 
 export async function checkedTodos(todo: CheckedProps) {
   try {
+    await db.toDos.deleteMany({
+      where: {
+        id: todo.id,
+      },
+    });
     const existCompletedTodos = await db.checkedTodos.findMany({
       where: {
         id: todo.id,
@@ -85,4 +90,16 @@ export async function checkedTodos(todo: CheckedProps) {
 export async function getCompletedTodos() {
   const completedTodos = await db.checkedTodos.findMany();
   return completedTodos;
+}
+
+export async function deleteCompletedTodos(id: number) {
+  if (!id) {
+    return;
+  }
+  await db.checkedTodos.deleteMany({
+    where: {
+      id,
+    },
+  });
+  revalidatePath("/");
 }
