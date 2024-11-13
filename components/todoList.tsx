@@ -1,17 +1,13 @@
 "use client";
 
-import { TrashIcon } from "@heroicons/react/16/solid";
-import { Button } from "./ui/button";
-import { Checkbox } from "./ui/checkbox";
-import { Input } from "./ui/input";
-import React, { useEffect, useState } from "react";
+import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
+import React, { useEffect } from "react";
 import useStore from "@/store";
 import {
   checkedTodos,
   deleteCompletedTodos,
   deleteTodos,
   initializeTodaysTodo,
-  uploadTodos,
 } from "@/app/actions";
 
 export interface ToDosProps {
@@ -35,7 +31,7 @@ export interface CheckedProps {
 
 export default function ToDoList({ todos, completedTodos }: ToDosProps) {
   const { date, setDate } = useStore((state) => state);
-  const [value, setValue] = useState<string>("");
+  const { toggleModal } = useStore();
 
   const formatDate = () => {
     const year = date.slice(0, 4);
@@ -63,17 +59,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
     (todos) => todos.toDoId === parseInt(date)
   );
 
-  const onSubmit = async (e: React.FormEvent<HTMLFormElement>) => {
-    e.preventDefault();
-    if (value === "") {
-      return;
-    }
-    const formData = new FormData(e.currentTarget);
-    await uploadTodos(formData, date);
-    setValue("");
-  };
-
-  const onDeleteTodos = async (id: number) => {
+  const onDeleteTodos = (id: number) => {
     todos.map(async (todos) => {
       if (todos.id === id) {
         await deleteTodos(id);
@@ -81,15 +67,11 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
     });
   };
 
-  const onChage = (e: React.ChangeEvent<HTMLInputElement>) => {
-    setValue(e.target.value);
-  };
-
   const onCheckedTodos = async (todo: CheckedProps) => {
     await checkedTodos(todo);
   };
 
-  const onDeleteCompletedTodos = async (id: number) => {
+  const onDeleteCompletedTodos = (id: number) => {
     completedTodos.map(async (todos) => {
       if (todos.id == id) {
         await deleteCompletedTodos(id);
@@ -99,16 +81,15 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
 
   return (
     <>
-      <div className="px-5 py-2 mb-[85px] ml-5 mr-5 border border-white rounded-md ">
+      <div className="py-2 mb-[70px] ml-7 mr-7 rounded-md ">
         <div className="mb-2 text-center">{formatDate()}</div>
-        <form onSubmit={onSubmit} className="flex gap-1 mb-5">
-          <Input onChange={onChage} value={value} name="todo" type="text" />
-          <Button className="border border-white">입력</Button>
-        </form>
-        <div className="flex items-center justify-between mb-4 px-2h-7">
-          <Checkbox className="bg-white" />
-          <TrashIcon className="h-6 text-white" />
+        <div
+          onClick={toggleModal}
+          className="flex self-center justify-center py-2 mb-2 rounded-md shadow-2xl bg-neutral-700"
+        >
+          <PlusIcon className="w-10" />
         </div>
+        <span>TO DO</span>
         <div className="flex mb-4 border border-white rounded-md"></div>
         {filteredTodos.length === 0 ? (
           <div className="mb-4 text-center text-gray-500">
@@ -118,17 +99,18 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
           filteredTodos.map((todos) => (
             <div
               key={`${todos.toDoId}-${todos.id}`}
-              className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
+              className="flex items-center justify-between px-2 py-4 mb-5 rounded-md bg-neutral-700"
             >
               <input type="checkbox" onChange={() => onCheckedTodos(todos)} />
-              <span className="w-full pl-1 text-black">{todos.text}</span>
+              <span className="w-full pl-3 text-white">{todos.text}</span>
               <TrashIcon
-                className="h-6 text-black cursor-pointer"
+                className="h-6 text-white cursor-pointer"
                 onClick={() => onDeleteTodos(todos.id)}
               />
             </div>
           ))
         )}
+        <span>COMPLETED</span>
         <div className="flex mb-4 border border-white rounded-md"></div>
         {filteredCompletedTodos.length === 0 ? (
           <div className="text-center text-gray-500">완료한 일이 없습니다.</div>
@@ -136,14 +118,14 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
           filteredCompletedTodos.map((todos) => (
             <div
               key={`${todos.toDoId}-${todos.id}`}
-              className="flex items-center justify-between gap-1 px-2 py-2 mb-5 bg-white border border-white rounded-md"
+              className="flex items-center justify-between gap-1 px-2 py-4 mb-5 rounded-md bg-neutral-800"
             >
-              <input type="checkbox" checked={true} />
-              <span className="w-full pl-1 text-gray-400 line-through">
+              <input type="checkbox" checked={true} disabled />
+              <span className="w-full pl-3 text-gray-500 line-through">
                 {todos.text}
               </span>
               <TrashIcon
-                className="h-6 text-black cursor-pointer"
+                className="h-6 text-white cursor-pointer"
                 onClick={() => onDeleteCompletedTodos(todos.id)}
               />
             </div>
