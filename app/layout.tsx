@@ -2,6 +2,7 @@ import type { Metadata, Viewport } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
 import Footer from "@/components/footer";
+import Modal from "@/components/modal";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -30,9 +31,11 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <body className={`${inter.className} mx-auto bg-neutral-800 text-white `}>
-        {children}
-        <Footer />
+      <body className={`${inter.className} mx-auto bg-neutral-950 text-white `}>
+        <>
+          <Modal>{children}</Modal>
+          <Footer />
+        </>
       </body>
     </html>
   );
