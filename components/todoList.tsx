@@ -9,6 +9,7 @@ import {
   deleteTodos,
   initializeTodaysTodo,
 } from "@/app/actions";
+import { motion, AnimatePresence } from "framer-motion";
 
 export interface ToDosProps {
   todos: {
@@ -85,7 +86,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
         <div className="mb-2 text-center">{formatDate()}</div>
         <div
           onClick={toggleModal}
-          className="flex self-center justify-center py-2 mb-2 rounded-md shadow-2xl bg-neutral-700"
+          className="flex self-center justify-center py-2 mb-2 rounded-md shadow-2xl cursor-pointer bg-neutral-700"
         >
           <PlusIcon className="w-10" />
         </div>
@@ -97,17 +98,27 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
           </div>
         ) : (
           filteredTodos.map((todos) => (
-            <div
-              key={`${todos.toDoId}-${todos.id}`}
-              className="flex items-center justify-between px-2 py-4 mb-5 rounded-md bg-neutral-700"
-            >
-              <input type="checkbox" onChange={() => onCheckedTodos(todos)} />
-              <span className="w-full pl-3 text-white">{todos.text}</span>
-              <TrashIcon
-                className="h-6 text-white cursor-pointer"
-                onClick={() => onDeleteTodos(todos.id)}
-              />
-            </div>
+            <>
+              <AnimatePresence>
+                <motion.div
+                  layout
+                  key={`${todos.toDoId}-${todos.id}`}
+                  className="flex items-center justify-between px-2 py-4 mb-5 rounded-md bg-neutral-700"
+                >
+                  <input
+                    type="checkbox"
+                    onChange={() => onCheckedTodos(todos)}
+                  />
+                  <span key={todos.id} className="w-full pl-3 text-white">
+                    {todos.text}
+                  </span>
+                  <TrashIcon
+                    className="h-6 text-white cursor-pointer"
+                    onClick={() => onDeleteTodos(todos.id)}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </>
           ))
         )}
         <span>COMPLETED</span>
@@ -116,19 +127,27 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
           <div className="text-center text-gray-500">완료한 일이 없습니다.</div>
         ) : (
           filteredCompletedTodos.map((todos) => (
-            <div
-              key={`${todos.toDoId}-${todos.id}`}
-              className="flex items-center justify-between gap-1 px-2 py-4 mb-5 rounded-md bg-neutral-800"
-            >
-              <input type="checkbox" checked={true} disabled />
-              <span className="w-full pl-3 text-gray-500 line-through">
-                {todos.text}
-              </span>
-              <TrashIcon
-                className="h-6 text-white cursor-pointer"
-                onClick={() => onDeleteCompletedTodos(todos.id)}
-              />
-            </div>
+            <>
+              <AnimatePresence>
+                <motion.div
+                  layout
+                  key={`${todos.toDoId}-${todos.id}`}
+                  className="flex items-center justify-between gap-1 px-2 py-4 mb-5 rounded-md bg-neutral-800"
+                >
+                  <input type="checkbox" checked={true} disabled />
+                  <span
+                    key={todos.id}
+                    className="w-full pl-3 text-gray-500 line-through"
+                  >
+                    {todos.text}
+                  </span>
+                  <TrashIcon
+                    className="h-6 text-white cursor-pointer"
+                    onClick={() => onDeleteCompletedTodos(todos.id)}
+                  />
+                </motion.div>
+              </AnimatePresence>
+            </>
           ))
         )}
       </div>
