@@ -5,6 +5,7 @@ import useStore from "@/store";
 import { useEffect, useRef, useState } from "react";
 import { Input } from "./ui/input";
 import { Button } from "./ui/button";
+import { motion, AnimatePresence } from "framer-motion";
 
 interface Props {
   children: React.ReactNode;
@@ -48,41 +49,46 @@ export default function Modal({ children }: Props) {
                 position: "fixed",
                 width: "100%",
               }
-            : { display: "block", pointerEvents: "auto" }
+            : { pointerEvents: "auto" }
         }
       >
         <div
           className="absolute "
-          style={
-            show
-              ? {
-                  height: "100%",
-                  width: "100%",
-                  display: "flex",
-                  justifyContent: "center",
-                  alignItems: "center",
-                  pointerEvents: "auto",
-                }
-              : { display: "none" }
-          }
+          style={{
+            height: "100%",
+            width: "100%",
+            display: "flex",
+            justifyContent: "center",
+            alignItems: "center",
+            pointerEvents: show ? "auto" : "none",
+          }}
         >
-          <div className="z-10 flex flex-col items-center justify-center gap-3 px-4 py-4 ml-5 mr-5 rounded-lg bg-neutral-950">
-            <form onSubmit={onSubmit} className="flex flex-col gap-3">
-              <Input
-                onChange={onChage}
-                value={value}
-                name="todo"
-                type="text"
-                placeholder="할 일을 입력하세요."
-                autoFocus
-                ref={inputRef}
-              />
-              <Button className="w-48">입력</Button>
-            </form>
-            <Button onClick={toggleModal} className="w-48">
-              취소
-            </Button>
-          </div>
+          <AnimatePresence>
+            {show && (
+              <motion.div
+                exit={{ opacity: 0, scale: 1 }}
+                initial={{ opacity: 0, scale: 0.95 }}
+                animate={{ opacity: 1, scale: 1 }}
+                className="z-10 flex flex-col items-center justify-center gap-3 px-4 py-4 ml-5 mr-5 rounded-lg bg-neutral-950"
+              >
+                <form onSubmit={onSubmit} className="flex flex-col gap-3">
+                  <Input
+                    onChange={onChage}
+                    value={value}
+                    name="todo"
+                    type="text"
+                    placeholder="할 일을 입력하세요."
+                    autoFocus
+                    ref={inputRef}
+                  />
+                  <Button className="w-48">입력</Button>
+                </form>
+                <Button onClick={toggleModal} className="w-48">
+                  취소
+                </Button>
+              </motion.div>
+            )}
+          </AnimatePresence>
         </div>
         {children}
       </div>
