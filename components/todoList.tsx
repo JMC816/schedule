@@ -2,7 +2,6 @@
 
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import React, { useEffect } from "react";
-import useStore from "@/store";
 import {
   checkedTodos,
   deleteCompletedTodos,
@@ -10,6 +9,7 @@ import {
   initializeTodaysTodo,
 } from "@/app/actions";
 import { motion, AnimatePresence } from "framer-motion";
+import { useModalStore, useStore } from "@/store";
 
 export interface ToDosProps {
   todos: {
@@ -31,8 +31,8 @@ export interface CheckedProps {
 }
 
 export default function ToDoList({ todos, completedTodos }: ToDosProps) {
-  const { date, setDate } = useStore((state) => state);
-  const { toggleModal } = useStore();
+  const { changeModalState } = useModalStore();
+  const { date, setDate } = useStore();
 
   const formatDate = () => {
     const year = date.slice(0, 4);
@@ -85,7 +85,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
       <div className="py-2 mb-[70px] ml-7 mr-7 rounded-md ">
         <div className="mb-2 text-center">{formatDate()}</div>
         <div
-          onClick={toggleModal}
+          onClick={() => changeModalState("todoModal")}
           className="flex self-center justify-center py-2 mb-2 rounded-md shadow-2xl cursor-pointer bg-neutral-700"
         >
           <PlusIcon className="w-10" />
