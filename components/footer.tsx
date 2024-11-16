@@ -1,6 +1,6 @@
 "use client";
 
-import useStore from "@/store";
+import { useModalStore } from "@/store";
 import {
   CalendarDateRangeIcon,
   CalendarIcon,
@@ -11,10 +11,10 @@ import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const pathname = usePathname();
-  const { show, toggleModal } = useStore();
+  const { todoModal, changeModalState } = useModalStore();
   const onClick = () => {
-    if (show === true) {
-      toggleModal();
+    if (todoModal === true) {
+      changeModalState("todoModal");
     }
   };
   return (
