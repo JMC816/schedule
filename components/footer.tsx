@@ -11,10 +11,13 @@ import { usePathname } from "next/navigation";
 
 export default function Footer() {
   const pathname = usePathname();
-  const { todoModal, changeModalState } = useModalStore();
+  const { todoModal, chartModal, changeModalState } = useModalStore();
   const onClick = () => {
     if (todoModal === true) {
       changeModalState("todoModal");
+    }
+    if (chartModal === true) {
+      changeModalState("chartModal");
     }
   };
   return (
