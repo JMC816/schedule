@@ -79,7 +79,6 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
       }
     });
   };
-
   return (
     <>
       <div className="py-2 mb-[70px] ml-7 mr-7 rounded-md ">
@@ -97,21 +96,19 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
             할 일이 없습니다.
           </div>
         ) : (
-          filteredTodos.map((todos) => (
+          filteredTodos.map((todos, index) => (
             <>
               <AnimatePresence>
                 <motion.div
                   layout
-                  key={`${todos.toDoId}-${todos.id}`}
+                  key={index}
                   className="flex items-center justify-between px-2 py-4 mb-5 rounded-md bg-neutral-700"
                 >
                   <input
                     type="checkbox"
                     onChange={() => onCheckedTodos(todos)}
                   />
-                  <span key={todos.id} className="w-full pl-3 text-white">
-                    {todos.text}
-                  </span>
+                  <span className="w-full pl-3 text-white">{todos.text}</span>
                   <TrashIcon
                     className="h-6 text-white cursor-pointer"
                     onClick={() => onDeleteTodos(todos.id)}
@@ -126,19 +123,16 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
         {filteredCompletedTodos.length === 0 ? (
           <div className="text-center text-gray-500">완료한 일이 없습니다.</div>
         ) : (
-          filteredCompletedTodos.map((todos) => (
+          filteredCompletedTodos.map((todos, index) => (
             <>
               <AnimatePresence>
                 <motion.div
                   layout
-                  key={`${todos.toDoId}-${todos.id}`}
+                  key={index}
                   className="flex items-center justify-between gap-1 px-2 py-4 mb-5 rounded-md bg-neutral-800"
                 >
                   <input type="checkbox" checked={true} disabled />
-                  <span
-                    key={todos.id}
-                    className="w-full pl-3 text-gray-500 line-through"
-                  >
+                  <span className="w-full pl-3 text-gray-500 line-through">
                     {todos.text}
                   </span>
                   <TrashIcon
