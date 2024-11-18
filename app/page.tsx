@@ -9,7 +9,7 @@ export default async function ToDo() {
     <div className="overflow-auto ">
       <Calendar
         completedTodos={completedTodos}
-        className="flex justify-center mb-2 border rounded-md ml-7 mr-7 mt-7"
+        className="flex justify-center mt-[85px] mb-2 ml-6 mr-6 rounded-md"
       />
       <div className="flex justify-end gap-1 mr-7 ml-7">
         <span className="text-xs">Less</span>
