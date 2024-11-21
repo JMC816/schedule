@@ -36,8 +36,8 @@ export default function Modal({ children }: Props) {
             pointerEvents: todoModal || chartModal ? "auto" : "none",
           }}
         >
-          {todoModal && <ToDoModal />}
-          {chartModal && <ChartModal />}
+          <ToDoModal />
+          <ChartModal />
         </div>
         {children}
       </div>
