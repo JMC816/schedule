@@ -14,16 +14,12 @@ export default function Modal({ children }: Props) {
     <>
       <div
         className="h-full"
-        style={
-          todoModal || chartModal
-            ? {
-                backgroundColor: "rgba(76,76,76,0.7)",
-                pointerEvents: "none",
-                position: "fixed",
-                width: "100%",
-              }
-            : { pointerEvents: "auto" }
-        }
+        style={{
+          backgroundColor: todoModal ? "rgba(76,76,76,0.7)" : "",
+          pointerEvents: todoModal || chartModal ? "none" : "auto",
+          position: "fixed",
+          width: "100%",
+        }}
       >
         <div
           className="absolute "
