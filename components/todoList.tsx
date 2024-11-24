@@ -3,13 +3,14 @@
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import React, { useEffect } from "react";
 import {
+  chartDataTodos,
   checkedTodos,
   deleteCompletedTodos,
   deleteTodos,
   initializeTodaysTodo,
 } from "@/app/actions";
 import { motion, AnimatePresence } from "framer-motion";
-import { useModalStore, useStore } from "@/store";
+import { useChartStore, useModalStore, useStore } from "@/store";
 
 export interface ToDosProps {
   todos: {
@@ -33,6 +34,7 @@ export interface CheckedProps {
 export default function ToDoList({ todos, completedTodos }: ToDosProps) {
   const { changeModalState } = useModalStore();
   const { date, setDate } = useStore();
+  const { setChartData } = useChartStore();
 
   const formatDate = () => {
     const year = date.slice(0, 4);
@@ -40,6 +42,24 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
     const day = date.slice(6, 8);
     return `${year}-${month}-${day}`;
   };
+
+  useEffect(() => {
+    const formatChartDate = () => {
+      const today = new Date()
+        .toLocaleDateString()
+        .replace(/\./g, "")
+        .split(" ")
+        .join("");
+      const year = today.slice(0, 4);
+      const month = today.slice(4, 6);
+      return `${year}${month}`;
+    };
+    const updateChartData = async () => {
+      const chartData = await chartDataTodos(formatChartDate());
+      setChartData(chartData!);
+    };
+    updateChartData();
+  }, [completedTodos]);
 
   useEffect(() => {
     if (!date) {
