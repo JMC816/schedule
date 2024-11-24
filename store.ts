@@ -13,6 +13,11 @@ interface ModalState {
   changeModalState: (type: Type) => void;
 }
 
+interface ChartState {
+  chartData: Record<string, number>;
+  setChartData: (newChartData: Record<string, number>) => void;
+}
+
 export const useModalStore = create<ModalState>((set) => ({
   todoModal: false,
   chartModal: false,
@@ -23,4 +28,10 @@ export const useModalStore = create<ModalState>((set) => ({
 export const useStore = create<Store>((set) => ({
   date: "",
   setDate: (newDate: string) => set({ date: newDate }),
+}));
+
+export const useChartStore = create<ChartState>((set) => ({
+  chartData: {},
+  setChartData: (newChartData: Record<string, number>) =>
+    set({ chartData: newChartData }),
 }));
