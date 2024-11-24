@@ -17,7 +17,7 @@ export default function Modal({ children }: Props) {
         style={{
           backgroundColor: todoModal ? "rgba(76,76,76,0.7)" : "",
           pointerEvents: todoModal || chartModal ? "none" : "auto",
-          position: "fixed",
+          position: todoModal || chartModal ? "fixed" : "static",
           width: "100%",
         }}
       >
