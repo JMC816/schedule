@@ -103,3 +103,23 @@ export async function deleteCompletedTodos(id: number) {
   });
   revalidatePath("/");
 }
+
+export async function chartDataTodos(createTodo: string) {
+  try {
+    const checkTodos = await db.checkedTodos.findMany();
+    const filteredTodo = await checkTodos.filter((todo) =>
+      String(todo.toDoId).includes(createTodo)
+    );
+    const count = await filteredTodo.map((todo) => todo.toDoId);
+    const result = await count.reduce(
+      (accu: Record<string, number>, curr: number) => {
+        accu[curr] = (accu[curr] || 0) + 1;
+        return accu;
+      },
+      {}
+    );
+    return result;
+  } catch (e) {
+    console.log(e);
+  }
+}
