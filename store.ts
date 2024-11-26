@@ -14,8 +14,8 @@ interface ModalState {
 }
 
 interface ChartState {
-  chartData: Record<string, number>;
-  setChartData: (newChartData: Record<string, number>) => void;
+  chartData: Record<string, Record<string, number>>;
+  setChartData: (newChartData: Record<string, Record<string, number>>) => void;
 }
 
 export const useModalStore = create<ModalState>((set) => ({
@@ -32,6 +32,6 @@ export const useStore = create<Store>((set) => ({
 
 export const useChartStore = create<ChartState>((set) => ({
   chartData: {},
-  setChartData: (newChartData: Record<string, number>) =>
+  setChartData: (newChartData: Record<string, Record<string, number>>) =>
     set({ chartData: newChartData }),
 }));
