@@ -24,10 +24,12 @@ function Calendar({
 }: CalendarProps) {
   const setDate = useStore((state) => state.setDate);
 
-  const onClickDay = (day: Date) => {
-    const newDate = day.toLocaleDateString();
-    createToDo(newDate.replace(/\./g, "").split(" ").join(""));
-    setDate(newDate.replace(/\./g, "").split(" ").join(""));
+  const onClickDay = (days: Date) => {
+    const year = days.getFullYear();
+    const month = (days.getMonth() + 1).toString().padStart(2, "0");
+    const day = days.getDate().toString().padStart(2, "0");
+    createToDo(`${year}${month}${day}`);
+    setDate(`${year}${month}${day}`);
   };
 
   const individualDate = completedTodos.reduce<Record<string, number>>(
