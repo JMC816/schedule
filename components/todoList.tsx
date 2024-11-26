@@ -3,10 +3,10 @@
 import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
 import React, { useEffect } from "react";
 import {
-  chartDataTodos,
   checkedTodos,
   deleteCompletedTodos,
   deleteTodos,
+  getCompletedTodos,
   initializeTodaysTodo,
 } from "@/app/actions";
 import { motion, AnimatePresence } from "framer-motion";
@@ -38,25 +38,44 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
 
   const formatDate = () => {
     const year = date.slice(0, 4);
-    const month = date.slice(4, 6);
-    const day = date.slice(6, 8);
+    const month = date.slice(4, 6).padStart(2, "0");
+    const day = date.slice(6, 8).padStart(2, "0");
     return `${year}-${month}-${day}`;
   };
 
   useEffect(() => {
-    const formatChartDate = () => {
+    const formatChartDate = (month: number) => {
       const today = new Date()
         .toLocaleDateString()
         .replace(/\./g, "")
         .split(" ")
         .join("");
       const year = today.slice(0, 4);
-      const month = today.slice(4, 6);
-      return `${year}${month}`;
+      const months = String(month).padStart(2, "0");
+      return `${year}${months}`;
     };
+
     const updateChartData = async () => {
-      const chartData = await chartDataTodos(formatChartDate());
-      setChartData(chartData!);
+      const monthlyData: Record<string, Record<string, number>> = {};
+      const chartData = await getCompletedTodos();
+
+      for (let month = 1; month <= 12; month++) {
+        const formatMonth = await formatChartDate(month);
+        const filteredTodo = await chartData.filter((todo) =>
+          String(todo.toDoId).includes(formatMonth)
+        );
+
+        const count = await filteredTodo.map((todo) => todo.toDoId);
+        const result = await count.reduce(
+          (accu: Record<string, number>, curr: number) => {
+            accu[curr] = (accu[curr] || 0) + 1;
+            return accu;
+          },
+          {}
+        );
+        monthlyData[formatMonth] = result;
+      }
+      setChartData(monthlyData);
     };
     updateChartData();
   }, [completedTodos]);
