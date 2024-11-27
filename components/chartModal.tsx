@@ -20,6 +20,16 @@ export default function ChartModal() {
     return `${year}${months}`;
   };
 
+  const years = () => {
+    const today = new Date()
+      .toLocaleDateString()
+      .replace(/\./g, "")
+      .split(" ")
+      .join("");
+    const year = today.slice(0, 4);
+    return `${year}`;
+  };
+
   const count = (obj: Record<string, number>) => {
     if (!obj) {
       return [];
@@ -28,18 +38,18 @@ export default function ChartModal() {
     return value;
   };
 
-  const jan = count(chartData[202402]);
-  const feb = count(chartData[202402]);
-  const mar = count(chartData[202403]);
-  const apr = count(chartData[202404]);
-  const may = count(chartData[202405]);
-  const jun = count(chartData[202406]);
-  const jul = count(chartData[202407]);
-  const aug = count(chartData[202408]);
-  const sep = count(chartData[202409]);
-  const oct = count(chartData[202410]);
-  const nov = count(chartData[202411]);
-  const dec = count(chartData[202412]);
+  const jan = count(chartData[years() + `01`]);
+  const feb = count(chartData[years() + `02`]);
+  const mar = count(chartData[years() + `03`]);
+  const apr = count(chartData[years() + `04`]);
+  const may = count(chartData[years() + `05`]);
+  const jun = count(chartData[years() + `06`]);
+  const jul = count(chartData[years() + `07`]);
+  const aug = count(chartData[years() + `08`]);
+  const sep = count(chartData[years() + `09`]);
+  const oct = count(chartData[years() + `10`]);
+  const nov = count(chartData[years() + `11`]);
+  const dec = count(chartData[years() + `12`]);
 
   const chatValue = count(chartData[formatToDay()]);
   const chartOne = chatValue.filter((n) => n == 1).length;
