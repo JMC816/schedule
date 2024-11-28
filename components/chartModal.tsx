@@ -30,6 +30,16 @@ export default function ChartModal() {
     return `${year}`;
   };
 
+  const months = () => {
+    const today = new Date()
+      .toLocaleDateString()
+      .replace(/\./g, "")
+      .split(" ")
+      .join("");
+    const month = today.slice(4, 6);
+    return `${month}`;
+  };
+
   const count = (obj: Record<string, number>) => {
     if (!obj) {
       return [];
@@ -274,15 +284,17 @@ export default function ChartModal() {
           transition={{ duration: 0.4, ease: "easeInOut" }}
         >
           <ChartHeader />
-          <div className="flex flex-col gap-4 ml-7 mr-7 mt-[85px] mb-24">
-            <div className="rounded-xl bg-neutral-700">
+          <div className="flex flex-col gap-4 ml-7 mr-7 mt-[85px] mb-22">
+            <div className="flex flex-col items-center gap-2 rounded-xl bg-neutral-700">
+              <span className="mt-2">{months() + " 월"}</span>
               <ApexChart
                 type="donut"
                 options={donutOptions.chartOptions}
                 series={donutOptions.series}
               />
             </div>
-            <div className="rounded-md bg-neutral-700">
+            <div className="pt-2 text-center rounded-xl bg-neutral-700">
+              <span>{years() + " 년"}</span>
               <ApexChart
                 type="bar"
                 series={BarOptions.series}
