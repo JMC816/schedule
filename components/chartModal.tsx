@@ -51,130 +51,42 @@ export default function ChartModal() {
   const nov = count(chartData[years() + `11`]);
   const dec = count(chartData[years() + `12`]);
 
-  const chatValue = count(chartData[formatToDay()]);
-  const chartOne = chatValue.filter((n) => n == 1).length;
-  const chartTwo = chatValue.filter((n) => n == 2).length;
-  const chartThree = chatValue.filter((n) => n == 3).length;
-  const chartfour = chatValue.filter((n) => n == 4).length;
-  const chartFive = chatValue.filter((n) => n == 5).length;
-  const chartSixOver = chatValue.filter((n) => n >= 6).length;
+  const chartValue = count(chartData[formatToDay()]);
 
-  const january = {
-    chartOne: jan.filter((n) => n == 1).length,
-    chartTwo: jan.filter((n) => n == 2).length,
-    chartThree: jan.filter((n) => n == 3).length,
-    chartfour: jan.filter((n) => n == 4).length,
-    chartFive: jan.filter((n) => n == 5).length,
-    chartSixOver: jan.filter((n) => n >= 6).length,
+  const chartOne = (month: number[]) => {
+    const one = month.filter((n) => n == 1).length;
+    return one;
   };
-  const february = {
-    chartOne: feb.filter((n) => n == 1).length,
-    chartTwo: feb.filter((n) => n == 2).length,
-    chartThree: feb.filter((n) => n == 3).length,
-    chartfour: feb.filter((n) => n == 4).length,
-    chartFive: feb.filter((n) => n == 5).length,
-    chartSixOver: feb.filter((n) => n >= 6).length,
+  const chartTwo = (month: number[]) => {
+    const two = month.filter((n) => n == 2).length;
+    return two;
   };
-
-  const march = {
-    chartOne: mar.filter((n) => n == 1).length,
-    chartTwo: mar.filter((n) => n == 2).length,
-    chartThree: mar.filter((n) => n == 3).length,
-    chartfour: mar.filter((n) => n == 4).length,
-    chartFive: mar.filter((n) => n == 5).length,
-    chartSixOver: mar.filter((n) => n >= 6).length,
+  const chartThree = (month: number[]) => {
+    const three = month.filter((n) => n == 3).length;
+    return three;
   };
-
-  const april = {
-    chartOne: apr.filter((n) => n == 1).length,
-    chartTwo: apr.filter((n) => n == 2).length,
-    chartThree: apr.filter((n) => n == 3).length,
-    chartfour: apr.filter((n) => n == 4).length,
-    chartFive: apr.filter((n) => n == 5).length,
-    chartSixOver: apr.filter((n) => n >= 6).length,
+  const chartFour = (month: number[]) => {
+    const four = month.filter((n) => n == 4).length;
+    return four;
   };
-
-  const mays = {
-    chartOne: may.filter((n) => n == 1).length,
-    chartTwo: may.filter((n) => n == 2).length,
-    chartThree: may.filter((n) => n == 3).length,
-    chartfour: may.filter((n) => n == 4).length,
-    chartFive: may.filter((n) => n == 5).length,
-    chartSixOver: may.filter((n) => n >= 6).length,
+  const chartFive = (month: number[]) => {
+    const five = month.filter((n) => n == 5).length;
+    return five;
   };
-
-  const june = {
-    chartOne: jun.filter((n) => n == 1).length,
-    chartTwo: jun.filter((n) => n == 2).length,
-    chartThree: jun.filter((n) => n == 3).length,
-    chartfour: jun.filter((n) => n == 4).length,
-    chartFive: jun.filter((n) => n == 5).length,
-    chartSixOver: jun.filter((n) => n >= 6).length,
-  };
-
-  const july = {
-    chartOne: jul.filter((n) => n == 1).length,
-    chartTwo: jul.filter((n) => n == 2).length,
-    chartThree: jul.filter((n) => n == 3).length,
-    chartfour: jul.filter((n) => n == 4).length,
-    chartFive: jul.filter((n) => n == 5).length,
-    chartSixOver: jul.filter((n) => n >= 6).length,
-  };
-
-  const august = {
-    chartOne: aug.filter((n) => n == 1).length,
-    chartTwo: aug.filter((n) => n == 2).length,
-    chartThree: aug.filter((n) => n == 3).length,
-    chartfour: aug.filter((n) => n == 4).length,
-    chartFive: aug.filter((n) => n == 5).length,
-    chartSixOver: aug.filter((n) => n >= 6).length,
-  };
-
-  const september = {
-    chartOne: sep.filter((n) => n == 1).length,
-    chartTwo: sep.filter((n) => n == 2).length,
-    chartThree: sep.filter((n) => n == 3).length,
-    chartfour: sep.filter((n) => n == 4).length,
-    chartFive: sep.filter((n) => n == 5).length,
-    chartSixOver: sep.filter((n) => n >= 6).length,
-  };
-
-  const october = {
-    chartOne: oct.filter((n) => n == 1).length,
-    chartTwo: oct.filter((n) => n == 2).length,
-    chartThree: oct.filter((n) => n == 3).length,
-    chartfour: oct.filter((n) => n == 4).length,
-    chartFive: oct.filter((n) => n == 5).length,
-    chartSixOver: oct.filter((n) => n >= 6).length,
-  };
-
-  const november = {
-    chartOne: nov.filter((n) => n == 1).length,
-    chartTwo: nov.filter((n) => n == 2).length,
-    chartThree: nov.filter((n) => n == 3).length,
-    chartfour: nov.filter((n) => n == 4).length,
-    chartFive: nov.filter((n) => n == 5).length,
-    chartSixOver: nov.filter((n) => n >= 6).length,
-  };
-
-  const december = {
-    chartOne: dec.filter((n) => n == 1).length,
-    chartTwo: dec.filter((n) => n == 2).length,
-    chartThree: dec.filter((n) => n == 3).length,
-    chartfour: dec.filter((n) => n == 4).length,
-    chartFive: dec.filter((n) => n == 5).length,
-    chartSixOver: dec.filter((n) => n >= 6).length,
+  const chartSixOver = (month: number[]) => {
+    const sixOver = month.filter((n) => n == 6).length;
+    return sixOver;
   };
 
   const ApexChart = dynamic(() => import("react-apexcharts"), { ssr: false });
   const donutOptions = {
     series: [
-      chartOne,
-      chartTwo,
-      chartThree,
-      chartfour,
-      chartFive,
-      chartSixOver,
+      chartOne(chartValue),
+      chartTwo(chartValue),
+      chartThree(chartValue),
+      chartFour(chartValue),
+      chartFive(chartValue),
+      chartSixOver(chartValue),
     ],
     chartOptions: {
       labels: ["one", "two", "three", "four", "five", "six"],
@@ -192,98 +104,98 @@ export default function ChartModal() {
     series: [
       {
         data: [
-          january.chartOne,
-          february.chartOne,
-          march.chartOne,
-          april.chartOne,
-          mays.chartOne,
-          june.chartOne,
-          july.chartOne,
-          august.chartOne,
-          september.chartOne,
-          october.chartOne,
-          november.chartOne,
-          december.chartOne,
+          chartOne(jan),
+          chartOne(feb),
+          chartOne(mar),
+          chartOne(apr),
+          chartOne(may),
+          chartOne(jun),
+          chartOne(jul),
+          chartOne(aug),
+          chartOne(sep),
+          chartOne(oct),
+          chartOne(nov),
+          chartOne(dec),
         ],
       },
       {
         data: [
-          january.chartTwo,
-          february.chartTwo,
-          march.chartTwo,
-          april.chartTwo,
-          mays.chartTwo,
-          june.chartTwo,
-          july.chartTwo,
-          august.chartTwo,
-          september.chartTwo,
-          october.chartTwo,
-          november.chartTwo,
-          december.chartTwo,
+          chartTwo(jan),
+          chartTwo(feb),
+          chartTwo(mar),
+          chartTwo(apr),
+          chartTwo(may),
+          chartTwo(jun),
+          chartTwo(jul),
+          chartTwo(aug),
+          chartTwo(sep),
+          chartTwo(oct),
+          chartTwo(nov),
+          chartTwo(dec),
         ],
       },
       {
         data: [
-          january.chartThree,
-          february.chartThree,
-          march.chartThree,
-          april.chartThree,
-          mays.chartThree,
-          june.chartThree,
-          july.chartThree,
-          august.chartThree,
-          september.chartThree,
-          october.chartThree,
-          november.chartThree,
-          december.chartThree,
+          chartThree(jan),
+          chartThree(feb),
+          chartThree(mar),
+          chartThree(apr),
+          chartThree(may),
+          chartThree(jun),
+          chartThree(jul),
+          chartThree(aug),
+          chartThree(sep),
+          chartThree(oct),
+          chartThree(nov),
+          chartThree(dec),
         ],
       },
       {
         data: [
-          january.chartfour,
-          february.chartfour,
-          march.chartfour,
-          april.chartfour,
-          mays.chartfour,
-          june.chartfour,
-          july.chartfour,
-          august.chartfour,
-          september.chartfour,
-          october.chartfour,
-          november.chartfour,
-          december.chartfour,
+          chartFour(jan),
+          chartFour(feb),
+          chartFour(mar),
+          chartFour(apr),
+          chartFour(may),
+          chartFour(jun),
+          chartFour(jul),
+          chartFour(aug),
+          chartFour(sep),
+          chartFour(oct),
+          chartFour(nov),
+          chartFour(dec),
         ],
       },
       {
         data: [
-          january.chartFive,
-          february.chartFive,
-          march.chartFive,
-          april.chartFive,
-          mays.chartFive,
-          june.chartFive,
-          july.chartFive,
-          august.chartFive,
-          september.chartFive,
-          october.chartFive,
-          november.chartFive,
-          december.chartFive,
+          chartFive(jan),
+          chartFive(feb),
+          chartFive(mar),
+          chartFive(apr),
+          chartFive(may),
+          chartFive(jun),
+          chartFive(jul),
+          chartFive(aug),
+          chartFive(sep),
+          chartFive(oct),
+          chartFive(nov),
+          chartFive(dec),
         ],
       },
       {
         data: [
-          january.chartSixOver,
-          february.chartSixOver,
-          march.chartSixOver,
-          april.chartSixOver,
-          mays.chartSixOver,
-          june.chartSixOver,
-          july.chartSixOver,
-          august.chartSixOver,
-          september.chartSixOver,
-          october.chartSixOver,
-          november.chartSixOver,
-          december.chartSixOver,
+          chartSixOver(jan),
+          chartSixOver(feb),
+          chartSixOver(mar),
+          chartSixOver(apr),
+          chartSixOver(may),
+          chartSixOver(jun),
+          chartSixOver(jul),
+          chartSixOver(aug),
+          chartSixOver(sep),
+          chartSixOver(oct),
+          chartSixOver(nov),
+          chartSixOver(dec),
         ],
       },
     ],
