@@ -4,24 +4,32 @@ import { useModalStore } from "@/store";
 import ToDoModal from "./todoModal";
 import ChartModal from "./chartModal";
 import SchedulePopup from "./schedule/popup/schedulePopup";
+import ScheduleModal from "./schedule/modal/scheduleModal";
 
 export interface Props {
   children: React.ReactNode;
 }
 
 export default function Modal({ children }: Props) {
-  const { todoModal, chartModal, schedulePopup } = useModalStore();
+  const { todoModal, chartModal, scheduleModal, schedulePopup } =
+    useModalStore();
   return (
     <>
       <div
         className="h-full"
         style={{
           backgroundColor:
-            todoModal || schedulePopup ? "rgba(76,76,76,0.7)" : "",
+            todoModal || schedulePopup || scheduleModal
+              ? "rgba(76,76,76,0.7)"
+              : "",
           pointerEvents:
-            todoModal || schedulePopup || chartModal ? "none" : "auto",
+            todoModal || schedulePopup || scheduleModal || chartModal
+              ? "none"
+              : "auto",
           position:
-            todoModal || schedulePopup || chartModal ? "fixed" : "static",
+            todoModal || schedulePopup || scheduleModal || chartModal
+              ? "fixed"
+              : "static",
           width: "100%",
         }}
       >
@@ -34,12 +42,15 @@ export default function Modal({ children }: Props) {
             justifyContent: "center",
             alignItems: "center",
             pointerEvents:
-              todoModal || schedulePopup || chartModal ? "auto" : "none",
+              todoModal || schedulePopup || scheduleModal || chartModal
+                ? "auto"
+                : "none",
           }}
         >
           <ToDoModal />
           <ChartModal />
           <SchedulePopup />
+          <ScheduleModal />
         </div>
         {children}
       </div>
