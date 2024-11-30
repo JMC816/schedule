@@ -1,5 +1,9 @@
 import Schedule_Box from "@/components/schedule/schedule";
 
 export default function Schedule() {
-  return <Schedule_Box></Schedule_Box>;
+  return (
+    <div className="overflow-auto ">
+      <Schedule_Box></Schedule_Box>
+    </div>
+  );
 }
