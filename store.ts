@@ -1,6 +1,6 @@
 import { create } from "zustand";
 
-type Type = "todoModal" | "chartModal" | "schedulePopup";
+type Type = "todoModal" | "chartModal" | "schedulePopup" | "scheduleModal";
 
 interface Store {
   date: string;
@@ -11,6 +11,7 @@ interface ModalState {
   todoModal: boolean;
   chartModal: boolean;
   schedulePopup: boolean;
+  scheduleModal: boolean;
   changeModalState: (type: Type) => void;
 }
 
@@ -23,6 +24,7 @@ export const useModalStore = create<ModalState>((set) => ({
   todoModal: false,
   chartModal: false,
   schedulePopup: false,
+  scheduleModal: false,
   changeModalState: (type) =>
     set((state) => ({ ...state, [type]: !state[type] })),
 }));
