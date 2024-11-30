@@ -124,7 +124,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
         <div className="mb-2 text-center">{formatDate()}</div>
         <div
           onClick={() => changeModalState("todoModal")}
-          className="flex self-center justify-center py-2 mb-2 rounded-md shadow-2xl cursor-pointer bg-neutral-700"
+          className="flex items-center justify-center py-2 mb-2 rounded-md cursor-pointer bg-neutral-700"
         >
           <PlusIcon className="w-10" />
         </div>
