@@ -35,9 +35,9 @@ export default function ScheduleList({ range }: RangeProps) {
       </div>
       <div
         onClick={onPopupClick}
-        className="flex self-center justify-center ml-5 mr-5 rounded-md bg-neutral-700 "
+        className="flex items-center justify-center py-2 rounded-md ml-7 mr-7 bg-neutral-700 "
       >
-        <PlusIcon className="w-12" />
+        <PlusIcon className="w-10" />
       </div>
     </>
   );
