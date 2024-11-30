@@ -13,6 +13,8 @@ export default function ScheduleList({ range }: RangeProps) {
   const onPopupClick = () => {
     if (!range?.from || !range?.to) {
       changeModalState("schedulePopup");
+    } else {
+      changeModalState("scheduleModal");
     }
   };
   return (
