@@ -36,13 +36,6 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
   const { date, setDate } = useStore();
   const { setChartData } = useChartStore();
 
-  const formatDate = () => {
-    const year = date.slice(0, 4);
-    const month = date.slice(4, 6).padStart(2, "0");
-    const day = date.slice(6, 8).padStart(2, "0");
-    return `${year}-${month}-${day}`;
-  };
-
   useEffect(() => {
     const formatChartDate = (month: number) => {
       const today = new Date()
@@ -121,10 +114,9 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
   return (
     <>
       <div className="py-2 mb-[70px] ml-7 mr-7 rounded-md ">
-        <div className="mb-2 text-center">{formatDate()}</div>
         <div
           onClick={() => changeModalState("todoModal")}
-          className="flex items-center justify-center py-2 mb-2 rounded-md cursor-pointer bg-neutral-700"
+          className="flex items-center justify-center py-2 mt-2 mb-2 rounded-md cursor-pointer bg-neutral-700"
         >
           <PlusIcon className="w-10" />
         </div>
