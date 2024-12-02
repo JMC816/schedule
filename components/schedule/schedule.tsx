@@ -1,12 +1,11 @@
 "use client";
 
-import { useState } from "react";
+import { useRangeStore } from "@/store";
 import { Schedule_Calendar } from "../ui/schedule_calendar";
-import { DateRange } from "react-day-picker";
 import ScheduleList from "./scheduleList";
 
 export default function Schedule_Box() {
-  const [range, setRange] = useState<DateRange | undefined>();
+  const { range, setRange } = useRangeStore();
 
   return (
     <>
@@ -16,7 +15,7 @@ export default function Schedule_Box() {
         onSelect={setRange}
         className="flex mb-2 ml-6 mr-6 justify-center mt-[85px]  "
       />
-      <ScheduleList range={range} />
+      <ScheduleList />
     </>
   );
 }

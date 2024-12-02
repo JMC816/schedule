@@ -1,15 +1,11 @@
 "use client";
 
-import { useModalStore } from "@/store";
+import { useModalStore, useRangeStore } from "@/store";
 import { CalendarIcon, PlusIcon } from "@heroicons/react/16/solid";
-import { DateRange } from "react-day-picker";
 
-interface RangeProps {
-  range: DateRange | undefined;
-}
-
-export default function ScheduleList({ range }: RangeProps) {
+export default function ScheduleList() {
   const { changeModalState } = useModalStore();
+  const { range } = useRangeStore();
   const onPopupClick = () => {
     if (!range?.from || !range?.to) {
       changeModalState("schedulePopup");
