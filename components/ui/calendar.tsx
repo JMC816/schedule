@@ -24,11 +24,11 @@ function Calendar({
 }: CalendarProps) {
   const setDate = useStore((state) => state.setDate);
 
-  const onClickDay = (days: Date) => {
+  const onClickDay = async (days: Date) => {
     const year = days.getFullYear();
     const month = (days.getMonth() + 1).toString().padStart(2, "0");
     const day = days.getDate().toString().padStart(2, "0");
-    createToDo(`${year}${month}${day}`);
+    await createToDo(`${year}${month}${day}`);
     setDate(`${year}${month}${day}`);
   };
 
