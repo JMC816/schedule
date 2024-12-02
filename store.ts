@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { DateRange } from "react-day-picker";
 
 type Type = "todoModal" | "chartModal" | "schedulePopup" | "scheduleModal";
 
@@ -20,6 +21,11 @@ interface ChartState {
   setChartData: (newChartData: Record<string, Record<string, number>>) => void;
 }
 
+interface RangeProps {
+  range: DateRange | undefined;
+  setRange: (type: DateRange | undefined) => void;
+}
+
 export const useModalStore = create<ModalState>((set) => ({
   todoModal: false,
   chartModal: false,
@@ -38,4 +44,9 @@ export const useChartStore = create<ChartState>((set) => ({
   chartData: {},
   setChartData: (newChartData: Record<string, Record<string, number>>) =>
     set({ chartData: newChartData }),
+}));
+
+export const useRangeStore = create<RangeProps>((set) => ({
+  range: undefined,
+  setRange: (range) => set({ range }),
 }));
