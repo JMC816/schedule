@@ -21,7 +21,7 @@ interface ChartState {
   setChartData: (newChartData: Record<string, Record<string, number>>) => void;
 }
 
-interface RangeProps {
+export interface RangeProps {
   range: DateRange | undefined;
   setRange: (type: DateRange | undefined) => void;
 }
