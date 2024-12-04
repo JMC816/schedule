@@ -1,15 +1,37 @@
 "use client";
 
-import { useModalStore } from "@/store";
+import { useModalStore, useRangeStore } from "@/store";
 import { Button } from "../../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
+import { createSchedule } from "@/app/schedule/action";
 import { Input } from "@/components/ui/input";
+import React, { useState } from "react";
 
 export default function ScheduleModal() {
   const { scheduleModal, changeModalState } = useModalStore();
+  const { range } = useRangeStore();
 
   const onCreateSchedule = async () => {
+    await createSchedule(range?.from, range?.to);
     changeModalState("scheduleModal");
+  };
+
+  const [selectedHour, setSelectedHour] = useState("12");
+  const [selectedMinute, setSelectedMinute] = useState("00");
+  console.log(selectedHour);
+  const hours = [...Array(24)].map((_, i) => i.toString().padStart(2, "0"));
+  const minutes = [...Array(60)].map((_, i) => i.toString().padStart(2, "0"));
+
+  const handleHourScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const index = Math.round(container.scrollTop / 32);
+    setSelectedHour(hours[index] || "00");
+  };
+
+  const handleMinuteScroll = (e: React.UIEvent<HTMLDivElement>) => {
+    const container = e.currentTarget;
+    const index = Math.round(container.scrollTop / 32);
+    setSelectedMinute(minutes[index] || "00");
   };
 
   return (
@@ -23,78 +45,43 @@ export default function ScheduleModal() {
             transition={{ duration: 0.4, ease: "easeInOut" }}
             className="z-10 flex flex-col items-center w-full h-full gap-3 px-4 py-4 mt-40 rounded-t-3xl bg-neutral-950"
           >
-            <div className="flex flex-col w-full gap-4">
-              <div>
-                <span>시작</span>
-                <div className="overflow-auto flex gap-4 [&_span]:bg-neutral-500 [&_span]:rounded-lg [&_span]:p-1">
-                  <span>09:00</span>
-                  <span>09:30</span>
-                  <span>10:00</span>
-                  <span>10:30</span>
-                  <span>11:00</span>
-                  <span>11:30</span>
-                  <span>12:00</span>
-                  <span>12:30</span>
-                  <span>13:00</span>
-                  <span>13:30</span>
-                  <span>14:00</span>
-                  <span>14:30</span>
-                  <span>15:00</span>
-                  <span>15:30</span>
-                  <span>16:00</span>
-                  <span>16:30</span>
-                  <span>17:00</span>
-                  <span>17:30</span>
-                  <span>18:00</span>
-                  <span>18:30</span>
-                  <span>19:00</span>
-                  <span>19:30</span>
-                  <span>20:00</span>
-                  <span>20:30</span>
-                  <span>21:00</span>
-                  <span>21:30</span>
-                  <span>22:00</span>
-                  <span>22:30</span>
-                  <span>23:00</span>
-                  <span>23:30</span>
-                  <span>24:00</span>
-                </div>
+            <div className="flex justify-center w-full gap-9 ">
+              <div
+                onScroll={handleHourScroll}
+                className="h-[80px] overflow-auto snap-y snap-mandatory"
+              >
+                <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
+                  {hours.map((t, index) => (
+                    <li
+                      className={`snap-center h-[20px] ${
+                        selectedHour === t ? "text-white" : "text-gray-500"
+                      }`}
+                      key={index}
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
-              <div>
-                <span>끝</span>
-                <div className="overflow-auto flex gap-4 [&_span]:bg-neutral-500 [&_span]:rounded-lg [&_span]:p-1">
-                  <span>09:00</span>
-                  <span>09:30</span>
-                  <span>10:00</span>
-                  <span>10:30</span>
-                  <span>11:00</span>
-                  <span>11:30</span>
-                  <span>12:00</span>
-                  <span>12:30</span>
-                  <span>13:00</span>
-                  <span>13:30</span>
-                  <span>14:00</span>
-                  <span>14:30</span>
-                  <span>15:00</span>
-                  <span>15:30</span>
-                  <span>16:00</span>
-                  <span>16:30</span>
-                  <span>17:00</span>
-                  <span>17:30</span>
-                  <span>18:00</span>
-                  <span>18:30</span>
-                  <span>19:00</span>
-                  <span>19:30</span>
-                  <span>20:00</span>
-                  <span>20:30</span>
-                  <span>21:00</span>
-                  <span>21:30</span>
-                  <span>22:00</span>
-                  <span>22:30</span>
-                  <span>23:00</span>
-                  <span>23:30</span>
-                  <span>24:00</span>
-                </div>
+              <div className="h-[80px] flex items-center justify-center">
+                <span>:</span>
+              </div>
+              <div
+                onScroll={handleMinuteScroll}
+                className="h-[80px] overflow-auto snap-y snap-mandatory"
+              >
+                <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3">
+                  {minutes.map((t, index) => (
+                    <li
+                      className={`snap-center h-[20px] ${
+                        selectedMinute === t ? "text-white" : "text-gray-500"
+                      }`}
+                      key={index}
+                    >
+                      {t}
+                    </li>
+                  ))}
+                </ul>
               </div>
             </div>
             <div className="flex flex-col w-full">
