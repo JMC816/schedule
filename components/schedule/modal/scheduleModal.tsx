@@ -63,7 +63,7 @@ export default function ScheduleModal() {
                   {selectedHourStart + "시 " + selectedMinuteStart + "분"}
                 </span>
               </div>
-              <div className="flex justify-center p-2 bg-neutral-700 rounded-xl gap-9 ml-9 mr-9">
+              <div className="flex justify-center p-2 ml-20 mr-20 bg-neutral-700 rounded-xl gap-9">
                 <div
                   onScroll={handleHourStartScroll}
                   className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
@@ -115,7 +115,7 @@ export default function ScheduleModal() {
                   {selectedHourEnd + "시 " + selectedMinuteEnd + "분"}
                 </span>
               </div>
-              <div className="flex justify-center p-2 bg-neutral-700 rounded-xl gap-9 mr-9 ml-9">
+              <div className="flex justify-center p-2 ml-20 mr-20 bg-neutral-700 rounded-xl gap-9">
                 <div
                   onScroll={handleHourEndScroll}
                   className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
