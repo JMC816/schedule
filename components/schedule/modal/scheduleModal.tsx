@@ -4,7 +4,8 @@ import { useModalStore, useRangeStore } from "@/store";
 import { Button } from "../../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
-import React, { useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
+import { createSchedule } from "@/app/schedule/actions";
 import {
   CalendarIcon,
   ChevronDownIcon,
@@ -22,7 +23,32 @@ export default function ScheduleModal() {
     changeModalState("scheduleModal");
   };
 
-  const onCreateSchedule = async () => {
+  const [value, setValue] = useState<string>("");
+  const inputRef = useRef<HTMLInputElement | null>(null);
+  useEffect(() => {
+    if (inputRef.current) {
+      inputRef.current.focus();
+    }
+  }, [scheduleModal]);
+
+  const onChage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setValue(e.target.value);
+  };
+
+  const onCreateSchedule = async (e: React.FormEvent<HTMLFormElement>) => {
+    e.preventDefault();
+    if (value === "") {
+      return;
+    }
+    const formData = new FormData(e.currentTarget);
+    setValue("");
+    await createSchedule(
+      selectedHourStart,
+      selectedHourEnd,
+      selectedMinuteStart,
+      selectedMinuteEnd,
+      formData
+    );
     setHandleAccordionStart(false);
     setHandleAccordionEnd(false);
     changeModalState("scheduleModal");
@@ -75,7 +101,8 @@ export default function ScheduleModal() {
     <>
       <AnimatePresence>
         {scheduleModal && (
-          <motion.div
+          <motion.form
+            onSubmit={onCreateSchedule}
             initial={{ opacity: 0, y: 1000 }}
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 1000 }}
@@ -83,8 +110,14 @@ export default function ScheduleModal() {
             className="z-10 flex flex-col items-center w-full h-full gap-3 py-6 mt-40 rounded-t-3xl bg-neutral-950"
           >
             <div className="flex flex-col w-full gap-4 px-9">
-              <span className="">일정</span>
-              <Input className="" />
+              <span>일정</span>
+              <Input
+                onChange={onChage}
+                value={value}
+                name="schedule"
+                type="text"
+                ref={inputRef}
+              />
             </div>
             <div className="flex w-full gap-4 text-sm h-7 px-9">
               <div className="flex items-center w-full gap-2 text-center border border-white rounded-md">
@@ -126,6 +159,7 @@ export default function ScheduleModal() {
                       initial={{ opacity: 0, height: 0 }}
                       animate={{ opacity: 1, height: "auto" }}
                       exit={{ opacity: 0, height: 0 }}
+                      transition={{ duration: 0.4, ease: "easeInOut" }}
                       className="flex justify-center p-2 mt-2 rounded-sm gap-9 bg-neutral-700"
                     >
                       <div
@@ -249,14 +283,12 @@ export default function ScheduleModal() {
               </div>
             </div>
             <div className="flex w-full gap-2 px-9">
-              <Button onClick={onCreateSchedule} className="w-full">
-                확인
-              </Button>
-              <Button onClick={onRemoveModal} className="w-full">
+              <Button className="w-full">확인</Button>
+              <Button type="button" onClick={onRemoveModal} className="w-full">
                 취소
               </Button>
             </div>
-          </motion.div>
+          </motion.form>
         )}
       </AnimatePresence>
     </>
