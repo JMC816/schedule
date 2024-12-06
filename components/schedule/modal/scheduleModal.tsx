@@ -1,22 +1,41 @@
 "use client";
 
-import { useModalStore } from "@/store";
+import { useModalStore, useRangeStore } from "@/store";
 import { Button } from "../../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import React, { useState } from "react";
+import {
+  CalendarIcon,
+  ChevronDownIcon,
+  ChevronUpIcon,
+  ClockIcon,
+} from "@heroicons/react/16/solid";
 
 export default function ScheduleModal() {
   const { scheduleModal, changeModalState } = useModalStore();
+  const { range } = useRangeStore();
 
   const onCreateSchedule = async () => {
     changeModalState("scheduleModal");
+  };
+
+  const [handleAccordionStart, setHandleAccordionStart] = useState(false);
+  const [handleAccordionEnd, setHandleAccordionEnd] = useState(false);
+
+  const onHandleAccordionStart = () => {
+    setHandleAccordionStart((prev) => !prev);
+  };
+
+  const onHandleAccordionEnd = () => {
+    setHandleAccordionEnd((prev) => !prev);
   };
 
   const [selectedHourStart, setSelectedHourStart] = useState("00");
   const [selectedMinuteStart, setSelectedMinuteStart] = useState("00");
   const [selectedHourEnd, setSelectedHourEnd] = useState("00");
   const [selectedMinuteEnd, setSelectedMinuteEnd] = useState("00");
+
   const hours = [...Array(24)].map((_, i) => i.toString().padStart(2, "0"));
   const minutes = [...Array(60)].map((_, i) => i.toString().padStart(2, "0"));
 
@@ -53,113 +72,173 @@ export default function ScheduleModal() {
             animate={{ opacity: 1, y: 0 }}
             exit={{ opacity: 0, y: 1000 }}
             transition={{ duration: 0.4, ease: "easeInOut" }}
-            className="z-10 flex flex-col items-center w-full h-full gap-3 py-6 mt-20 rounded-t-3xl bg-neutral-950"
+            className="z-10 flex flex-col items-center w-full h-full gap-3 py-6 mt-40 rounded-t-3xl bg-neutral-950"
           >
-            <div className="flex flex-col justify-center w-full gap-4">
-              <div className="flex gap-5 mr-9 ml-9">
-                <span className="">시작</span>
-                <span className="border border-white"></span>
-                <span>
-                  {selectedHourStart + "시 " + selectedMinuteStart + "분"}
-                </span>
-              </div>
-              <div className="flex justify-center p-2 ml-20 mr-20 bg-neutral-700 rounded-xl gap-9">
-                <div
-                  onScroll={handleHourStartScroll}
-                  className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
-                >
-                  <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
-                    {hours.map((t, index) => (
-                      <li
-                        className={`snap-center h-[20px] ${
-                          selectedHourStart === t
-                            ? "text-white"
-                            : "text-gray-500"
-                        }`}
-                        key={index}
-                      >
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="h-[80px] flex items-center justify-center">
-                  <span>:</span>
-                </div>
-                <div
-                  onScroll={handleMinuteStartScroll}
-                  className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
-                >
-                  <ul
-                    className={`flex flex-col mb-[60px] first:mt-[30px] gap-3`}
-                  >
-                    {minutes.map((t, index) => (
-                      <li
-                        className={`snap-center h-[20px] ${
-                          selectedMinuteStart === t
-                            ? "text-white"
-                            : "text-gray-500"
-                        }`}
-                        key={index}
-                      >
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-              <div className="flex gap-8 t mr-9 ml-9">
-                <span>끝</span>
-                <span className="border border-white"></span>
-                <span>
-                  {selectedHourEnd + "시 " + selectedMinuteEnd + "분"}
-                </span>
-              </div>
-              <div className="flex justify-center p-2 ml-20 mr-20 bg-neutral-700 rounded-xl gap-9">
-                <div
-                  onScroll={handleHourEndScroll}
-                  className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
-                >
-                  <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
-                    {hours.map((t, index) => (
-                      <li
-                        className={`snap-center h-[20px] ${
-                          selectedHourEnd === t ? "text-white" : "text-gray-500"
-                        }`}
-                        key={index}
-                      >
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-                <div className="h-[80px] flex items-center justify-center">
-                  <span>:</span>
-                </div>
-                <div
-                  onScroll={handleMinuteEndScroll}
-                  className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
-                >
-                  <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3">
-                    {minutes.map((t, index) => (
-                      <li
-                        className={`snap-center h-[20px] ${
-                          selectedMinuteEnd === t
-                            ? "text-white"
-                            : "text-gray-500"
-                        }`}
-                        key={index}
-                      >
-                        {t}
-                      </li>
-                    ))}
-                  </ul>
-                </div>
-              </div>
-            </div>
             <div className="flex flex-col w-full gap-4 px-9">
               <span className="">일정</span>
               <Input className="" />
+            </div>
+            <div className="flex w-full gap-4 text-sm h-7 px-9">
+              <div className="flex items-center w-full gap-2 text-center border border-white rounded-md">
+                <CalendarIcon className="h-full p-1" />
+                {range?.from?.toLocaleDateString()}
+              </div>
+              <div className="flex flex-col items-center justify-center">
+                <div className="w-4 border rounded-lg"></div>
+                <div />
+              </div>
+              <div className="flex items-center w-full gap-2 text-center border border-white rounded-md ">
+                <CalendarIcon className="h-full p-1" />
+                {range?.to?.toLocaleDateString()}
+              </div>
+            </div>
+            <div className="flex flex-col justify-center w-full gap-2 px-9">
+              <div className="p-2 rounded-md bg-neutral-500">
+                <div
+                  className="flex justify-around"
+                  onClick={onHandleAccordionStart}
+                >
+                  <span className="">시작</span>
+                  <span className="border border-white"></span>
+                  <span className="flex gap-2">
+                    <ClockIcon className="w-6" />
+                    {selectedHourStart + "시 " + selectedMinuteStart + "분"}
+                  </span>
+                  <span>
+                    {handleAccordionStart ? (
+                      <ChevronUpIcon className="w-6" />
+                    ) : (
+                      <ChevronDownIcon className="w-6" />
+                    )}
+                  </span>
+                </div>
+                <AnimatePresence>
+                  {handleAccordionStart && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="flex justify-center p-2 mt-2 rounded-sm gap-9 bg-neutral-700"
+                    >
+                      <div
+                        onScroll={handleHourStartScroll}
+                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                      >
+                        <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
+                          {hours.map((t, index) => (
+                            <li
+                              className={`snap-center h-[20px] ${
+                                selectedHourStart === t
+                                  ? "text-white"
+                                  : "text-gray-500"
+                              }`}
+                              key={index}
+                            >
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="h-[80px] flex items-center justify-center">
+                        <span>:</span>
+                      </div>
+                      <div
+                        onScroll={handleMinuteStartScroll}
+                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                      >
+                        <ul
+                          className={`flex flex-col mb-[60px] first:mt-[30px] gap-3`}
+                        >
+                          {minutes.map((t, index) => (
+                            <li
+                              className={`snap-center h-[20px] ${
+                                selectedMinuteStart === t
+                                  ? "text-white"
+                                  : "text-gray-500"
+                              }`}
+                              key={index}
+                            >
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
+              <div
+                className="p-2 rounded-md bg-neutral-500"
+                onClick={onHandleAccordionEnd}
+              >
+                <div className="flex justify-around">
+                  <span className="">끝</span>
+                  <span className="border border-white"></span>
+                  <span className="flex gap-2">
+                    <ClockIcon className="w-6" />
+                    {selectedHourEnd + "시 " + selectedMinuteEnd + "분"}
+                  </span>
+                  <span>
+                    {handleAccordionEnd ? (
+                      <ChevronUpIcon className="w-6" />
+                    ) : (
+                      <ChevronDownIcon className="w-6" />
+                    )}
+                  </span>
+                </div>
+                <AnimatePresence>
+                  {handleAccordionEnd && (
+                    <motion.div
+                      initial={{ opacity: 0, height: 0 }}
+                      animate={{ opacity: 1, height: "auto" }}
+                      exit={{ opacity: 0, height: 0 }}
+                      className="flex justify-center p-2 mt-2 rounded-sm gap-9 bg-neutral-700"
+                    >
+                      <div
+                        onScroll={handleHourEndScroll}
+                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                      >
+                        <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
+                          {hours.map((t, index) => (
+                            <li
+                              className={`snap-center h-[20px] ${
+                                selectedHourEnd === t
+                                  ? "text-white"
+                                  : "text-gray-500"
+                              }`}
+                              key={index}
+                            >
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                      <div className="h-[80px] flex items-center justify-center">
+                        <span>:</span>
+                      </div>
+                      <div
+                        onScroll={handleMinuteEndScroll}
+                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                      >
+                        <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3">
+                          {minutes.map((t, index) => (
+                            <li
+                              className={`snap-center h-[20px] ${
+                                selectedMinuteEnd === t
+                                  ? "text-white"
+                                  : "text-gray-500"
+                              }`}
+                              key={index}
+                            >
+                              {t}
+                            </li>
+                          ))}
+                        </ul>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </div>
             </div>
             <div className="flex w-full gap-2 px-9">
               <Button onClick={onCreateSchedule} className="w-full">
