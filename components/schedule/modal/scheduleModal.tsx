@@ -166,7 +166,7 @@ export default function ScheduleModal() {
                         onScroll={handleHourStartScroll}
                         className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
-                        <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
+                        <ul className="flex flex-col mb-[50px] first:mt-[50px] gap-3 ">
                           {hours.map((t, index) => (
                             <li
                               className={`snap-center h-[20px] ${
@@ -189,7 +189,7 @@ export default function ScheduleModal() {
                         className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
                         <ul
-                          className={`flex flex-col mb-[60px] first:mt-[30px] gap-3`}
+                          className={`flex flex-col mb-[50px] first:mt-[50px] gap-3`}
                         >
                           {minutes.map((t, index) => (
                             <li
@@ -241,7 +241,7 @@ export default function ScheduleModal() {
                         onScroll={handleHourEndScroll}
                         className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
-                        <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
+                        <ul className="flex flex-col mb-[50px] first:mt-[50px] gap-3 ">
                           {hours.map((t, index) => (
                             <li
                               className={`snap-center h-[20px] ${
@@ -263,7 +263,7 @@ export default function ScheduleModal() {
                         onScroll={handleMinuteEndScroll}
                         className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
-                        <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3">
+                        <ul className="flex flex-col mb-[50px] first:mt-[50px] gap-3">
                           {minutes.map((t, index) => (
                             <li
                               className={`snap-center h-[20px] ${
