@@ -16,7 +16,15 @@ export default function ScheduleModal() {
   const { scheduleModal, changeModalState } = useModalStore();
   const { range } = useRangeStore();
 
+  const onRemoveModal = () => {
+    setHandleAccordionStart(false);
+    setHandleAccordionEnd(false);
+    changeModalState("scheduleModal");
+  };
+
   const onCreateSchedule = async () => {
+    setHandleAccordionStart(false);
+    setHandleAccordionEnd(false);
     changeModalState("scheduleModal");
   };
 
@@ -244,10 +252,7 @@ export default function ScheduleModal() {
               <Button onClick={onCreateSchedule} className="w-full">
                 확인
               </Button>
-              <Button
-                onClick={() => changeModalState("scheduleModal")}
-                className="w-full"
-              >
+              <Button onClick={onRemoveModal} className="w-full">
                 취소
               </Button>
             </div>
