@@ -136,7 +136,7 @@ export default function ScheduleModal() {
             <div className="flex flex-col justify-center w-full gap-2 px-9">
               <div className="p-2 rounded-md bg-neutral-500">
                 <div
-                  className="flex justify-around"
+                  className="flex justify-around mb-1"
                   onClick={onHandleAccordionStart}
                 >
                   <span className="">시작</span>
@@ -157,14 +157,14 @@ export default function ScheduleModal() {
                   {handleAccordionStart && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
+                      animate={{ opacity: 1, height: 100 }}
                       exit={{ opacity: 0, height: 0 }}
-                      transition={{ duration: 0.4, ease: "easeInOut" }}
-                      className="flex justify-center p-2 mt-2 rounded-sm gap-9 bg-neutral-700"
+                      transition={{ type: "spring", duration: 0.4, bounce: 0 }}
+                      className="flex justify-center overflow-hidden rounded-sm gap-9 bg-neutral-700"
                     >
                       <div
                         onScroll={handleHourStartScroll}
-                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                        className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
                         <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
                           {hours.map((t, index) => (
@@ -181,12 +181,12 @@ export default function ScheduleModal() {
                           ))}
                         </ul>
                       </div>
-                      <div className="h-[80px] flex items-center justify-center">
+                      <div className="h-[100px] flex items-center justify-center">
                         <span>:</span>
                       </div>
                       <div
                         onScroll={handleMinuteStartScroll}
-                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                        className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
                         <ul
                           className={`flex flex-col mb-[60px] first:mt-[30px] gap-3`}
@@ -213,7 +213,7 @@ export default function ScheduleModal() {
                 className="p-2 rounded-md bg-neutral-500"
                 onClick={onHandleAccordionEnd}
               >
-                <div className="flex justify-around">
+                <div className="flex justify-around mb-1">
                   <span className="">끝</span>
                   <span className="border border-white"></span>
                   <span className="flex gap-2">
@@ -232,13 +232,14 @@ export default function ScheduleModal() {
                   {handleAccordionEnd && (
                     <motion.div
                       initial={{ opacity: 0, height: 0 }}
-                      animate={{ opacity: 1, height: "auto" }}
+                      animate={{ opacity: 1, height: 100 }}
                       exit={{ opacity: 0, height: 0 }}
-                      className="flex justify-center p-2 mt-2 rounded-sm gap-9 bg-neutral-700"
+                      transition={{ type: "spring", duration: 0.4, bounce: 0 }}
+                      className="flex justify-center overflow-hidden rounded-sm gap-9 bg-neutral-700"
                     >
                       <div
                         onScroll={handleHourEndScroll}
-                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                        className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
                         <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3 ">
                           {hours.map((t, index) => (
@@ -255,12 +256,12 @@ export default function ScheduleModal() {
                           ))}
                         </ul>
                       </div>
-                      <div className="h-[80px] flex items-center justify-center">
+                      <div className="h-[100px] flex items-center justify-center">
                         <span>:</span>
                       </div>
                       <div
                         onScroll={handleMinuteEndScroll}
-                        className="h-[80px] scrollbar-hide overflow-auto snap-y snap-mandatory"
+                        className="h-[100px] scrollbar-hide overflow-auto snap-y snap-mandatory"
                       >
                         <ul className="flex flex-col mb-[60px] first:mt-[30px] gap-3">
                           {minutes.map((t, index) => (
