@@ -50,7 +50,6 @@ export default function ToDoModal() {
                 name="todo"
                 type="text"
                 placeholder="할 일을 입력하세요."
-                autoFocus
                 ref={inputRef}
               />
               <Button className="w-48">입력</Button>
