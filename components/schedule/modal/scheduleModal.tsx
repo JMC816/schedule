@@ -133,7 +133,7 @@ export default function ScheduleModal() {
                 {range?.to?.toLocaleDateString()}
               </div>
             </div>
-            <div className="flex flex-col justify-center w-full gap-2 px-9">
+            <div className="flex flex-col justify-center w-full gap-3 px-9">
               <div className="p-2 rounded-md bg-neutral-500">
                 <div
                   className="flex justify-around mb-1"
