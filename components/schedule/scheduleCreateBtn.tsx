@@ -3,7 +3,7 @@
 import { useModalStore, useRangeStore } from "@/store";
 import { CalendarIcon, PlusIcon } from "@heroicons/react/16/solid";
 
-export default function ScheduleList() {
+export default function ScheduleCreateBtn() {
   const { changeModalState } = useModalStore();
   const { range } = useRangeStore();
   const onPopupClick = () => {
