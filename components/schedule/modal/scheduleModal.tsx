@@ -139,7 +139,7 @@ export default function ScheduleModal() {
                   className="flex justify-around mb-1"
                   onClick={onHandleAccordionStart}
                 >
-                  <span className="">시작</span>
+                  <span className="w-8 text-center">시작</span>
                   <span className="border border-white"></span>
                   <span className="flex gap-2">
                     <ClockIcon className="w-6" />
@@ -214,7 +214,7 @@ export default function ScheduleModal() {
                 onClick={onHandleAccordionEnd}
               >
                 <div className="flex justify-around mb-1">
-                  <span className="">끝</span>
+                  <span className="w-8 text-center">끝</span>
                   <span className="border border-white"></span>
                   <span className="flex gap-2">
                     <ClockIcon className="w-6" />
