@@ -24,3 +24,8 @@ export async function createSchedule(
   }
   revalidatePath("/schedule");
 }
+
+export async function getScheduleList() {
+  const scheduleList = await db.scheduleList.findMany();
+  return scheduleList;
+}
