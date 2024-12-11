@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
+import { revalidatePath } from "next/cache";
 
 export async function createSchedule(
   hourStart: string,
@@ -21,4 +22,5 @@ export async function createSchedule(
   } catch (e) {
     console.log(e);
   }
+  revalidatePath("/schedule");
 }
