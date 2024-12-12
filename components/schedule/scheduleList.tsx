@@ -4,6 +4,8 @@ import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
 import { ScheduleListProps } from "./schedule";
 import { Button } from "../ui/button";
 import { useRangeStore } from "@/store";
+import React from "react";
+import { deleteScheduleList } from "@/app/schedule/actions";
 
 export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
   const { range } = useRangeStore();
@@ -15,6 +17,13 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
     return `rgb(${red}, ${green}, ${blue})`;
   };
 
+  const onDeleteList = (id: number) => {
+    scheduleLists.map(async (list) => {
+      if (list.id == id) {
+        await deleteScheduleList(id);
+      }
+    });
+  };
   return (
     <div>
       {scheduleLists.map((list) => (
@@ -43,7 +52,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
                     list.timeStart.slice(2)} -{" "}
                   {list.timeEnd.slice(0, 2) + ":" + list.timeEnd.slice(2)}
                 </span>
-                <Button>삭제</Button>
+                <Button onClick={() => onDeleteList(list.id)}>삭제</Button>
               </div>
             </div>
           </div>
