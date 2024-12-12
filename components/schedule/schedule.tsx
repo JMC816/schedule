@@ -46,7 +46,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
         )}
       </AnimatePresence>
       {scheduleList || (
-        <div className="py-16 ml-7 mr-7">
+        <div className="mt-20 ml-7 mr-7">
           <ScheduleList scheduleLists={scheduleLists} />
         </div>
       )}
