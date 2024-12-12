@@ -29,3 +29,16 @@ export async function getScheduleList() {
   const scheduleList = await db.scheduleList.findMany();
   return scheduleList;
 }
+
+export async function deleteScheduleList(id: number) {
+  try {
+    await db.scheduleList.delete({
+      where: {
+        id,
+      },
+    });
+  } catch (e) {
+    console.log(e);
+  }
+  revalidatePath("/schedule");
+}
