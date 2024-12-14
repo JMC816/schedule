@@ -31,5 +31,7 @@ model ScheduleList {
   id        Int    @id @default(autoincrement())
   timeStart String
   timeEnd   String
+  dayStart  String
+  dayEnd    String
   text      String
 }
