@@ -3,13 +3,10 @@
 import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
 import { ScheduleListProps } from "./schedule";
 import { Button } from "../ui/button";
-import { useRangeStore } from "@/store";
 import React from "react";
 import { deleteScheduleList } from "@/app/schedule/actions";
 
 export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
-  const { range } = useRangeStore();
-
   const getRandomColor = () => {
     const red = Math.floor(Math.random() * 256);
     const green = Math.floor(Math.random() * 256);
@@ -40,9 +37,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
             <div className="text-xs">
               <span className="flex items-center gap-2 text-gray-500">
                 <CalendarIcon className="w-5" />
-                {range?.from?.toLocaleDateString() +
-                  " - " +
-                  range?.to?.toLocaleDateString()}
+                {list.dayStart + " - " + list.dayEnd}
               </span>
               <div className="flex justify-between w-full">
                 <span className="flex items-center gap-2 text-gray-500">
