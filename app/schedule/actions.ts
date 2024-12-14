@@ -8,6 +8,8 @@ export async function createSchedule(
   hourtEnd: string,
   minuteStart: string,
   minuteEnd: string,
+  dayStart: string,
+  dayEnd: string,
   formdata: FormData
 ) {
   try {
@@ -16,6 +18,8 @@ export async function createSchedule(
       data: {
         timeStart: hourStart + minuteStart,
         timeEnd: hourtEnd + minuteEnd,
+        dayStart,
+        dayEnd,
         text,
       },
     });
