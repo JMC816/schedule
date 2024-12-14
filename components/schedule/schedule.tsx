@@ -13,6 +13,8 @@ export interface ScheduleListProps {
     id: number;
     timeStart: string;
     timeEnd: string;
+    dayStart: string;
+    dayEnd: string;
     text: string;
   }[];
 }
