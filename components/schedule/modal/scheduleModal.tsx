@@ -47,6 +47,8 @@ export default function ScheduleModal() {
       selectedHourEnd,
       selectedMinuteStart,
       selectedMinuteEnd,
+      String(range?.from?.toLocaleDateString()),
+      String(range?.to?.toLocaleDateString()),
       formData
     );
     setHandleAccordionStart(false);
