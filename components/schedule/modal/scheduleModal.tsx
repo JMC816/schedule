@@ -12,6 +12,7 @@ import {
   ChevronUpIcon,
   ClockIcon,
 } from "@heroicons/react/16/solid";
+import { formatDate } from "@/utils/format";
 
 export default function ScheduleModal() {
   const { scheduleModal, changeModalState } = useModalStore();
@@ -47,8 +48,8 @@ export default function ScheduleModal() {
       selectedHourEnd,
       selectedMinuteStart,
       selectedMinuteEnd,
-      String(range?.from?.toLocaleDateString()),
-      String(range?.to?.toLocaleDateString()),
+      String(formatDate(range?.from!)),
+      String(formatDate(range?.to!)),
       formData
     );
     setHandleAccordionStart(false);
