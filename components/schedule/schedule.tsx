@@ -37,6 +37,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <Schedule_Calendar
+                scheduleLists={scheduleLists}
                 mode="range"
                 selected={range}
                 onSelect={setRange}
