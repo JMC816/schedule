@@ -1,20 +1,23 @@
-"use client";
-
 import * as React from "react";
 import { ChevronLeftIcon, ChevronRightIcon } from "@radix-ui/react-icons";
 import { DayPicker } from "react-day-picker";
 
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
+import { ScheduleListProps } from "../schedule/schedule";
+import { formatDate } from "@/utils/format";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
+
+type ScheduleProps = CalendarProps & ScheduleListProps;
 
 function Schedule_Calendar({
   className,
   classNames,
   showOutsideDays = true,
+  scheduleLists,
   ...props
-}: CalendarProps) {
+}: ScheduleProps) {
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -63,6 +66,22 @@ function Schedule_Calendar({
       components={{
         IconLeft: () => <ChevronLeftIcon className="w-4 h-4" />,
         IconRight: () => <ChevronRightIcon className="w-4 h-4" />,
+        DayContent: ({ date }) => (
+          <div className="relative flex flex-col items-center justify-center">
+            <span>{date.getDate()}</span>
+            {scheduleLists.map((list) => (
+              <div
+                key={list.id}
+                className="absolute flex justify-center h-2 top-6"
+              >
+                {list.dayStart <= formatDate(date) &&
+                list.dayEnd >= formatDate(date) ? (
+                  <div className="w-2 h-2 rounded-full bg-sky-500" />
+                ) : null}
+              </div>
+            ))}
+          </div>
+        ),
       }}
       {...props}
     />
