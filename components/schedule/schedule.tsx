@@ -1,11 +1,15 @@
 "use client";
 
-import { useRangeStore } from "@/store";
+import { useModalStore, useRangeStore } from "@/store";
 import { Schedule_Calendar } from "../ui/schedule_calendar";
 import ScheduleCreateBtn from "./scheduleCreateBtn";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
-import { ChevronDownIcon } from "@heroicons/react/16/solid";
+import {
+  ChevronDownIcon,
+  ChevronUpIcon,
+  PlusIcon,
+} from "@heroicons/react/16/solid";
 import ScheduleList from "./scheduleList";
 
 export interface ScheduleListProps {
@@ -21,9 +25,17 @@ export interface ScheduleListProps {
 
 export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
   const { range, setRange } = useRangeStore();
+  const { changeModalState } = useModalStore();
   const [scheduleList, setScheduleList] = useState(true);
   const onClickList = () => {
     setScheduleList((prev) => !prev);
+  };
+  const onPopupClick = () => {
+    if (!range?.from || !range?.to) {
+      changeModalState("schedulePopup");
+    } else {
+      changeModalState("scheduleModal");
+    }
   };
   return (
     <>
@@ -53,8 +65,17 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
           <ScheduleList scheduleLists={scheduleLists} />
         </div>
       )}
-      <div className="fixed bottom-0 left-0 w-full mb-20" onClick={onClickList}>
-        <ChevronDownIcon className="w-10 rounded-full bg-neutral-500" />
+      <div
+        className="fixed bottom-0 w-12 mb-20 rounded-full left-5 W-12 bg-neutral-500"
+        onClick={onClickList}
+      >
+        {scheduleList ? <ChevronDownIcon /> : <ChevronUpIcon />}
+      </div>
+      <div
+        onClick={onPopupClick}
+        className="fixed bottom-0 w-12 mb-20 rounded-full right-5 bg-neutral-500"
+      >
+        <PlusIcon />
       </div>
     </>
   );
