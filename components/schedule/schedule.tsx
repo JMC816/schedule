@@ -1,6 +1,6 @@
 "use client";
 
-import { useModalStore, useRangeStore } from "@/store";
+import { useModalStore, useRangeStore, useScheduleStore } from "@/store";
 import { Schedule_Calendar } from "../ui/schedule_calendar";
 import ScheduleCreateBtn from "./scheduleCreateBtn";
 import { AnimatePresence, motion } from "framer-motion";
@@ -26,7 +26,13 @@ export interface ScheduleListProps {
 export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
   const { range, setRange } = useRangeStore();
   const { changeModalState } = useModalStore();
+  const { day } = useScheduleStore();
   const [scheduleList, setScheduleList] = useState(true);
+
+  const filterDayList = scheduleLists.filter(
+    (list) => list.dayStart <= day && list.dayEnd >= day
+  );
+
   const onClickList = () => {
     setScheduleList((prev) => !prev);
   };
@@ -37,6 +43,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
       changeModalState("scheduleModal");
     }
   };
+
   return (
     <>
       <AnimatePresence initial={false}>
@@ -70,6 +77,11 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
         onClick={onClickList}
       >
         {scheduleList ? <ChevronDownIcon /> : <ChevronUpIcon />}
+        {filterDayList.length != 0 ? (
+          <div className="absolute flex items-center justify-center rounded-full bg-sky-500 w-7 h-7 bottom-8 left-8">
+            <span>{filterDayList.length}</span>
+          </div>
+        ) : null}
       </div>
       <div
         onClick={onPopupClick}
