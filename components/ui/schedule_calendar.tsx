@@ -6,6 +6,7 @@ import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { ScheduleListProps } from "../schedule/schedule";
 import { formatDate } from "@/utils/format";
+import { useScheduleStore } from "@/store";
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker>;
 
@@ -18,6 +19,12 @@ function Schedule_Calendar({
   scheduleLists,
   ...props
 }: ScheduleProps) {
+  const { setDay } = useScheduleStore();
+
+  const onDayClick = (day: Date) => {
+    setDay(formatDate(day));
+  };
+
   return (
     <DayPicker
       showOutsideDays={showOutsideDays}
@@ -84,6 +91,7 @@ function Schedule_Calendar({
         ),
       }}
       {...props}
+      onDayClick={onDayClick}
     />
   );
 }
