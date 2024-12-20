@@ -5,8 +5,15 @@ import { ScheduleListProps } from "./schedule";
 import { Button } from "../ui/button";
 import React from "react";
 import { deleteScheduleList } from "@/app/schedule/actions";
+import { useScheduleStore } from "@/store";
 
 export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
+  const { day } = useScheduleStore();
+
+  const filterList = scheduleLists.filter(
+    (list) => list.dayStart <= day && list.dayEnd >= day
+  );
+
   const getRandomColor = () => {
     const red = Math.floor(Math.random() * 256);
     const green = Math.floor(Math.random() * 256);
@@ -15,7 +22,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
   };
 
   const onDeleteList = (id: number) => {
-    scheduleLists.map(async (list) => {
+    filterList.map(async (list) => {
       if (list.id == id) {
         await deleteScheduleList(id);
       }
@@ -23,7 +30,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
   };
   return (
     <div>
-      {scheduleLists.map((list) => (
+      {filterList.map((list) => (
         <div
           className="flex gap-3 mb-3 rounded-sm bg-neutral-700"
           key={list.id}
