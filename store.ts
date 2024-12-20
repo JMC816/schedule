@@ -28,8 +28,8 @@ export interface RangeProps {
 }
 
 interface ScheduleProps {
-  lists: ScheduleListProps;
-  setLists: (type: ScheduleListProps) => void;
+  day: string;
+  setDay: (type: string) => void;
 }
 
 export const useModalStore = create<ModalState>((set) => ({
@@ -58,6 +58,6 @@ export const useRangeStore = create<RangeProps>((set) => ({
 }));
 
 export const useScheduleStore = create<ScheduleProps>((set) => ({
-  lists: { scheduleLists: [] },
-  setLists: (lists) => set({ lists }),
+  day: "",
+  setDay: (day) => set({ day }),
 }));
