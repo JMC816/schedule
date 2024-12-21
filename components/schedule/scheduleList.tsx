@@ -14,6 +14,18 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
     (list) => list.dayStart <= day && list.dayEnd >= day
   );
 
+  const weeks = [
+    "일요일",
+    "월요일",
+    "화요알",
+    "수요일",
+    "목요일",
+    "금요일",
+    "토요일",
+  ];
+
+  const dayWeeks = new Date(day).getDay();
+
   const getRandomColor = () => {
     const red = Math.floor(Math.random() * 256);
     const green = Math.floor(Math.random() * 256);
@@ -30,6 +42,11 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
   };
   return (
     <div>
+      <div className="flex flex-col">
+        <span className="text-4xl">{day.substring(8)}</span>
+        <span>{weeks[dayWeeks]}</span>
+        <div className="mt-1 mb-4 border"></div>
+      </div>
       {filterList.map((list) => (
         <div
           className="flex gap-3 mb-3 rounded-sm bg-neutral-700"
