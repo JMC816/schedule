@@ -2,10 +2,10 @@
 
 import { useModalStore, useRangeStore, useScheduleStore } from "@/store";
 import { Schedule_Calendar } from "../ui/schedule_calendar";
-import ScheduleCreateBtn from "./scheduleCreateBtn";
 import { AnimatePresence, motion } from "framer-motion";
 import { useState } from "react";
 import {
+  CalendarIcon,
   ChevronDownIcon,
   ChevronUpIcon,
   PlusIcon,
@@ -62,7 +62,22 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
                 onSelect={setRange}
                 className="flex mb-2 ml-6 mr-6 justify-center mt-[85px]"
               />
-              <ScheduleCreateBtn />
+              <div className="px-2 py-2 mb-2 ml-5 mr-5 ">
+                <div className="flex gap-4 h-7">
+                  <div className="flex items-center w-full gap-2 text-center border border-white rounded-md">
+                    <CalendarIcon className="h-full p-1" />
+                    {range?.from?.toLocaleDateString()}
+                  </div>
+                  <div className="flex flex-col items-center justify-center">
+                    <div className="w-4 border rounded-lg"></div>
+                    <div />
+                  </div>
+                  <div className="flex items-center w-full gap-2 text-center border border-white rounded-md ">
+                    <CalendarIcon className="h-full p-1" />
+                    {range?.to?.toLocaleDateString()}
+                  </div>
+                </div>
+              </div>
             </motion.div>
           </div>
         )}
@@ -72,6 +87,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
           <ScheduleList scheduleLists={scheduleLists} />
         </div>
       )}
+
       <div
         className="fixed bottom-0 w-12 mb-20 rounded-full left-5 W-12 bg-neutral-500"
         onClick={onClickList}
