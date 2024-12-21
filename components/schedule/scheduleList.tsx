@@ -17,7 +17,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
   const weeks = [
     "일요일",
     "월요일",
-    "화요알",
+    "화요일",
     "수요일",
     "목요일",
     "금요일",
