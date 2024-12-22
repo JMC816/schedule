@@ -1,6 +1,6 @@
 "use client";
 
-import { PlusIcon, TrashIcon } from "@heroicons/react/16/solid";
+import { TrashIcon } from "@heroicons/react/16/solid";
 import React, { useEffect } from "react";
 import {
   checkedTodos,
@@ -10,29 +10,10 @@ import {
   initializeTodaysTodo,
 } from "@/app/actions";
 import { motion, AnimatePresence } from "framer-motion";
-import { useChartStore, useModalStore, useStore } from "@/store";
-
-export interface ToDosProps {
-  todos: {
-    id: number;
-    text: string;
-    toDoId: number;
-  }[];
-  completedTodos: {
-    id: number;
-    text: string;
-    toDoId: number;
-  }[];
-}
-
-export interface CheckedProps {
-  id: number;
-  text: string;
-  toDoId: number;
-}
+import { useChartStore, useStore } from "@/store";
+import { CheckedProps, ToDosProps } from "./todo";
 
 export default function ToDoList({ todos, completedTodos }: ToDosProps) {
-  const { changeModalState } = useModalStore();
   const { date, setDate } = useStore();
   const { setChartData } = useChartStore();
 
@@ -111,21 +92,16 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
       }
     });
   };
+
   return (
     <>
-      <div className="py-2 mb-[70px] ml-7 mr-7 rounded-md ">
-        <div
-          onClick={() => changeModalState("todoModal")}
-          className="flex items-center justify-center py-2 mt-2 mb-2 rounded-md cursor-pointer bg-neutral-700"
-        >
-          <PlusIcon className="w-10" />
-        </div>
-        <span>TO DO</span>
-        <div className="flex mb-4 border border-white rounded-md"></div>
+      <div className="flex justify-between gap-2 py-2 mt-20 rounded-md ml-7 mr-7">
         {filteredTodos.length === 0 ? (
-          <div className="mb-4 text-center text-gray-500">
-            할 일이 없습니다.
-          </div>
+          <>
+            <div className="w-full p-2 text-center rounded-3xl bg-neutral-500 active:bg-neutral-700">
+              <span>TO DO</span>
+            </div>
+          </>
         ) : (
           filteredTodos.map((todos) => (
             <AnimatePresence key={todos.id}>
@@ -143,10 +119,12 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
             </AnimatePresence>
           ))
         )}
-        <span>COMPLETED</span>
-        <div className="flex mb-4 border border-white rounded-md"></div>
         {filteredCompletedTodos.length === 0 ? (
-          <div className="text-center text-gray-500">완료한 일이 없습니다.</div>
+          <>
+            <div className="w-full p-2 text-center rounded-3xl bg-neutral-500 active:bg-neutral-700">
+              <span>COMPLETED</span>
+            </div>
+          </>
         ) : (
           filteredCompletedTodos.map((todos) => (
             <AnimatePresence key={todos.id}>
