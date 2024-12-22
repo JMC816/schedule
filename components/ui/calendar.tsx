@@ -7,7 +7,7 @@ import { DayPicker } from "react-day-picker";
 import { cn } from "@/lib/utils";
 import { buttonVariants } from "@/components/ui/button";
 import { createToDo } from "@/app/actions";
-import { ToDosProps } from "../todoList";
+import { ToDosProps } from "../todo";
 import { useStore } from "@/store";
 
 type MyTodosProps = Pick<ToDosProps, "completedTodos">;
