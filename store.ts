@@ -1,6 +1,5 @@
 import { create } from "zustand";
 import { DateRange } from "react-day-picker";
-import { ScheduleListProps } from "./components/schedule/schedule";
 
 type Type = "todoModal" | "chartModal" | "schedulePopup" | "scheduleModal";
 
@@ -32,6 +31,11 @@ interface ScheduleProps {
   setDay: (type: string) => void;
 }
 
+interface ToDoListProps {
+  slide: boolean;
+  setSlide: (type: boolean) => void;
+}
+
 export const useModalStore = create<ModalState>((set) => ({
   todoModal: false,
   chartModal: false,
@@ -60,4 +64,9 @@ export const useRangeStore = create<RangeProps>((set) => ({
 export const useScheduleStore = create<ScheduleProps>((set) => ({
   day: "",
   setDay: (day) => set({ day }),
+}));
+
+export const useToDoListStore = create<ToDoListProps>((set) => ({
+  slide: true,
+  setSlide: (state) => set({ slide: !state }),
 }));
