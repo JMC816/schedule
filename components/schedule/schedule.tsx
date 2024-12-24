@@ -62,9 +62,9 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
                 onSelect={setRange}
                 className="flex mb-2 ml-6 mr-6 justify-center mt-[85px]"
               />
-              <div className="px-2 py-2 mb-2 ml-5 mr-5 ">
+              <div className="px-2 py-2 mb-2 ml-2 mr-2 ">
                 <div className="flex gap-4 h-7">
-                  <div className="flex items-center w-full gap-2 text-center border border-white rounded-md">
+                  <div className="flex items-center w-full gap-2 text-sm text-center border border-white rounded-md">
                     <CalendarIcon className="h-full p-1" />
                     {range?.from?.toLocaleDateString()}
                   </div>
@@ -72,7 +72,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
                     <div className="w-4 border rounded-lg"></div>
                     <div />
                   </div>
-                  <div className="flex items-center w-full gap-2 text-center border border-white rounded-md ">
+                  <div className="flex items-center w-full gap-2 text-sm text-center border border-white rounded-md">
                     <CalendarIcon className="h-full p-1" />
                     {range?.to?.toLocaleDateString()}
                   </div>
@@ -89,7 +89,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
       )}
 
       <div
-        className="fixed bottom-0 w-12 mb-20 rounded-full left-5 W-12 bg-neutral-500"
+        className="fixed bottom-0 w-12 mb-20 rounded-full left-5 W-12 bg-neutral-500 active:bg-neutral-700"
         onClick={onClickList}
       >
         {scheduleList ? <ChevronDownIcon /> : <ChevronUpIcon />}
@@ -101,7 +101,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
       </div>
       <div
         onClick={onPopupClick}
-        className="fixed bottom-0 w-12 mb-20 rounded-full right-5 bg-neutral-500"
+        className="fixed bottom-0 w-12 mb-20 rounded-full right-5 bg-neutral-500 active:bg-neutral-700"
       >
         <PlusIcon />
       </div>
