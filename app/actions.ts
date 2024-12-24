@@ -1,7 +1,6 @@
 "use server";
 
-import { CheckedProps } from "@/components/todoList";
-
+import { CheckedProps } from "@/components/todo";
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
@@ -67,13 +66,13 @@ export async function checkedTodos(todo: CheckedProps) {
         id: todo.id,
       },
     });
-    const existCompletedTodos = await db.checkedTodos.findMany({
+    const existCompletedTodos = await db.completedTodos.findMany({
       where: {
         id: todo.id,
       },
     });
     if (existCompletedTodos.length === 0) {
-      await db.checkedTodos.create({
+      await db.completedTodos.create({
         data: {
           id: todo.id,
           text: todo.text,
@@ -88,7 +87,7 @@ export async function checkedTodos(todo: CheckedProps) {
 }
 
 export async function getCompletedTodos() {
-  const completedTodos = await db.checkedTodos.findMany();
+  const completedTodos = await db.completedTodos.findMany();
   return completedTodos;
 }
 
@@ -96,7 +95,7 @@ export async function deleteCompletedTodos(id: number) {
   if (!id) {
     return;
   }
-  await db.checkedTodos.deleteMany({
+  await db.completedTodos.deleteMany({
     where: {
       id,
     },
