@@ -3,8 +3,9 @@
 import { AnimatePresence, motion } from "framer-motion";
 import ToDoList from "./todoList";
 import { Calendar } from "./ui/calendar";
-import { useModalStore, useToDoListStore } from "@/store";
+import { useModalStore, useStore, useToDoListStore } from "@/store";
 import { PlusIcon } from "@heroicons/react/16/solid";
+import { useEffect } from "react";
 
 export interface ToDosProps {
   todos: {
@@ -28,6 +29,37 @@ export interface CheckedProps {
 export default function ToDo_Box({ todos, completedTodos }: ToDosProps) {
   const { changeModalState } = useModalStore();
   const { setSlide, slide } = useToDoListStore();
+  const { setCheckToDo } = useToDoListStore();
+  const { date, setDate } = useStore();
+
+  useEffect(() => {
+    if (!date) {
+      const today = new Date()
+        .toLocaleDateString()
+        .replace(/\./g, "")
+        .split(" ")
+        .join("");
+      setDate(today);
+    }
+  }, [date, setDate]);
+
+  const onClickToDo = () => {
+    setSlide(true);
+    setCheckToDo(true);
+  };
+
+  const onClickCompletedToDo = () => {
+    setSlide(true);
+    setCheckToDo(false);
+  };
+
+  const filteredTodos = todos.filter(
+    (todos) => todos.toDoId === parseInt(date)
+  );
+  const filteredCompletedTodos = completedTodos.filter(
+    (todos) => todos.toDoId === parseInt(date)
+  );
+
   return (
     <>
       <AnimatePresence initial={false}>
@@ -55,15 +87,25 @@ export default function ToDo_Box({ todos, completedTodos }: ToDosProps) {
               </div>
               <div className="flex justify-center gap-2 mt-4 mr-7 ml-7">
                 <div
-                  className="w-full p-2 text-center rounded-3xl bg-neutral-500 active:bg-neutral-700"
-                  onClick={() => setSlide(true)}
+                  className="relative w-full p-2 text-center rounded-3xl bg-neutral-500 active:bg-neutral-700"
+                  onClick={onClickToDo}
                 >
+                  {filteredTodos.length !== 0 ? (
+                    <div className="absolute flex items-center justify-center rounded-full bg-sky-500 w-7 h-7 left-[85%] bottom-[50%]">
+                      {filteredTodos.length}
+                    </div>
+                  ) : null}
                   <span>TO DO</span>
                 </div>
                 <div
-                  className="w-full p-2 text-center rounded-3xl bg-neutral-500 active:bg-neutral-700"
-                  onClick={() => setSlide(true)}
+                  className="relative w-full p-2 text-center rounded-3xl bg-neutral-500 active:bg-neutral-700"
+                  onClick={onClickCompletedToDo}
                 >
+                  {filteredCompletedTodos.length !== 0 ? (
+                    <div className="absolute flex items-center justify-center rounded-full bg-sky-500 w-7 h-7 left-[85%] bottom-[50%]">
+                      {filteredCompletedTodos.length}
+                    </div>
+                  ) : null}
                   <span>COMPLETED</span>
                 </div>
               </div>
