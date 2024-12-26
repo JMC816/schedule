@@ -43,10 +43,6 @@ export async function getTodos() {
   return todos;
 }
 
-export async function initializeTodaysTodo(today: string) {
-  await createToDo(today);
-}
-
 export async function deleteTodos(id: number) {
   if (!id) {
     return;
