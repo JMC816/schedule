@@ -41,7 +41,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
     });
   };
   return (
-    <div>
+    <div className="mb-32">
       <div className="flex flex-col">
         <span className="text-4xl">{day.substring(8)}</span>
         <span>{weeks[dayWeeks]}</span>
