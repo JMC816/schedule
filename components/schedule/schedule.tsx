@@ -93,7 +93,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
         onClick={onClickList}
       >
         {scheduleList ? <ChevronDownIcon /> : <ChevronUpIcon />}
-        {filterDayList.length != 0 ? (
+        {filterDayList.length !== 0 ? (
           <div className="absolute flex items-center justify-center rounded-full bg-sky-500 w-7 h-7 bottom-8 left-8">
             <span>{filterDayList.length}</span>
           </div>
