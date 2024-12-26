@@ -1,4 +1,6 @@
 import tailwindcssAnimate from "tailwindcss-animate";
+import tailwindScrollbarHide from "tailwind-scrollbar-hide";
+
 /** @type {import('tailwindcss').Config} */
 export default {
   darkMode: ["class"],
@@ -57,5 +59,5 @@ export default {
       },
     },
   },
-  plugins: [tailwindcssAnimate, require("tailwind-scrollbar-hide")],
+  plugins: [tailwindcssAnimate, tailwindScrollbarHide],
 };
