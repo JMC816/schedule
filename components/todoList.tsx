@@ -52,7 +52,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
       setChartData(monthlyData);
     };
     updateChartData();
-  }, [completedTodos]);
+  }, [completedTodos, setChartData]);
 
   const filteredTodos = todos.filter(
     (todos) => todos.toDoId === parseInt(date)
