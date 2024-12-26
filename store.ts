@@ -33,7 +33,9 @@ interface ScheduleProps {
 
 interface ToDoListProps {
   slide: boolean;
+  checkToDo: boolean;
   setSlide: (type: boolean) => void;
+  setCheckToDo: (type: boolean) => void;
 }
 
 export const useModalStore = create<ModalState>((set) => ({
@@ -68,5 +70,7 @@ export const useScheduleStore = create<ScheduleProps>((set) => ({
 
 export const useToDoListStore = create<ToDoListProps>((set) => ({
   slide: true,
+  checkToDo: true,
   setSlide: (state) => set({ slide: !state }),
+  setCheckToDo: (todo) => set({ checkToDo: !todo }),
 }));
