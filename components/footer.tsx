@@ -42,7 +42,7 @@ export default function Footer() {
         <Link href="/schedule" onClick={onClick}>
           <div className="flex flex-col items-center">
             <CalendarIcon className="w-8" />
-            <span className="text-sm">캘린더</span>
+            <span className="text-sm">일정</span>
           </div>
         </Link>
       </div>
