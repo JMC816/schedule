@@ -11,7 +11,7 @@ export default function Header() {
   return (
     <div className="fixed top-0 flex items-center w-full min-h-16 bg-neutral-700">
       <div className="flex justify-between w-full ml-5 mr-5">
-        {pathname === "/" && (
+        {pathname === "/todo" && (
           <>
             {slide ? (
               <div className="w-6" />

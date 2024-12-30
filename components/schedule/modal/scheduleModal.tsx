@@ -5,7 +5,7 @@ import { Button } from "../../ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 import { Input } from "@/components/ui/input";
 import React, { useEffect, useRef, useState } from "react";
-import { createSchedule } from "@/app/schedule/actions";
+import { createSchedule } from "@/app/(main)/schedule/actions";
 import {
   CalendarIcon,
   ChevronDownIcon,

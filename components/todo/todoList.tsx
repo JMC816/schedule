@@ -7,7 +7,7 @@ import {
   deleteCompletedTodos,
   deleteTodos,
   getCompletedTodos,
-} from "@/app/actions";
+} from "@/app/(main)/todo/actions";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChartStore, useStore, useToDoListStore } from "@/store";
 import { CheckedProps, ToDosProps } from "./todo";

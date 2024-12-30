@@ -1,7 +1,7 @@
 "use client";
 
 import dynamic from "next/dynamic";
-import ChartHeader from "./chartHeader";
+import ChartHeader from "../chart/chartHeader";
 import { motion, AnimatePresence } from "framer-motion";
 import { useChartStore, useModalStore } from "@/store";
 import { ApexOptions } from "apexcharts";

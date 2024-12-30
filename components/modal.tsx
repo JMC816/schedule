@@ -1,11 +1,10 @@
 "use client";
 
 import { useModalStore } from "@/store";
-import ToDoModal from "./todoModal";
-import ChartModal from "./chartModal";
+import ToDoModal from "./todo/modal/todoModal";
+import ChartModal from "./todo/modal/chartModal";
 import SchedulePopup from "./schedule/popup/schedulePopup";
 import ScheduleModal from "./schedule/modal/scheduleModal";
-
 export interface Props {
   children: React.ReactNode;
 }

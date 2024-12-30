@@ -2,7 +2,7 @@
 
 import { AnimatePresence, motion } from "framer-motion";
 import ToDoList from "./todoList";
-import { Calendar } from "./ui/calendar";
+import { Calendar } from "../ui/calendar";
 import { useModalStore, useStore, useToDoListStore } from "@/store";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import { useEffect } from "react";

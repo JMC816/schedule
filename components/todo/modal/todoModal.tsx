@@ -1,10 +1,10 @@
 "use client";
 
-import { uploadTodos } from "@/app/actions";
+import { uploadTodos } from "@/app/(main)/todo/actions";
 import { useModalStore, useStore } from "@/store";
 import { useEffect, useRef, useState } from "react";
-import { Input } from "./ui/input";
-import { Button } from "./ui/button";
+import { Input } from "@/components/ui/input";
+import { Button } from "@/components/ui/button";
 import { motion, AnimatePresence } from "framer-motion";
 
 export default function ToDoModal() {

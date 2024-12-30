@@ -24,10 +24,10 @@ export default function Footer() {
     <div className="fixed bottom-0 flex w-full min-h-16 bg-neutral-700">
       <div
         className={`flex items-center justify-center w-full ${
-          pathname === "/" ? "bg-neutral-500" : "bg-neutral-700"
+          pathname === "/todo" ? "bg-neutral-500" : "bg-neutral-700"
         }`}
       >
-        <Link href="/" onClick={onClick}>
+        <Link href="/todo" onClick={onClick}>
           <div className="flex flex-col items-center">
             <CalendarDateRangeIcon className="w-8 " />
             <span className="text-sm">할 일</span>

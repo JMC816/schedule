@@ -4,7 +4,7 @@ import { CalendarIcon, ClockIcon } from "@heroicons/react/16/solid";
 import { ScheduleListProps } from "./schedule";
 import { Button } from "../ui/button";
 import React from "react";
-import { deleteScheduleList } from "@/app/schedule/actions";
+import { deleteScheduleList } from "@/app/(main)/schedule/actions";
 import { useScheduleStore } from "@/store";
 
 export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
