@@ -1,6 +1,6 @@
 "use server";
 
-import { CheckedProps } from "@/components/todo";
+import { CheckedProps } from "@/components/todo/todo";
 import db from "@/lib/db";
 import { revalidatePath } from "next/cache";
 
