@@ -1,5 +1,5 @@
 import { getCompletedTodos, getTodos } from "./actions";
-import ToDo_Box from "@/components/todo";
+import ToDo_Box from "@/components/todo/todo";
 
 export default async function ToDo() {
   const todos = await getTodos();
