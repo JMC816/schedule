@@ -1,26 +1,34 @@
-import { Button } from "@/components/ui/button";
+"use client";
+
+import FormButton from "@/components/form/form-btn";
+import FormInput from "@/components/form/form-input";
 import Link from "next/link";
+import { useFormState } from "react-dom";
+import { login } from "./actions";
 
 export default function Login() {
+  const [state, dispatch] = useFormState(login, null);
   return (
     <div className="ml-[20%] mr-[20%] h-[100vh] justify-center items-center gap-2 flex flex-col">
-      <form className="flex flex-col w-full gap-2 p-5 bg-neutral-700 rounded-xl">
-        <input
-          placeholder="아이디를 입력하세요"
-          type="text"
-          className="p-1 text-black rounded-sm"
+      <form
+        action={dispatch}
+        className="flex flex-col w-full gap-2 p-5 bg-neutral-700 rounded-xl"
+      >
+        <FormInput
+          name="id"
+          type="id"
+          required
+          placeholder="아이디"
+          errors={state?.fieldErrors.id}
         />
-        <input
-          placeholder="비밀번호를 입력하세요"
+        <FormInput
+          name="password"
           type="password"
-          className="p-1 text-black rounded-sm"
+          required
+          placeholder="비밀번호"
+          errors={state?.fieldErrors.password}
         />
-
-        <Button>
-          <Link href="/todo" className="w-full">
-            로그인
-          </Link>
-        </Button>
+        <FormButton text="로그인" />
       </form>
       <Link href="/create-account">
         <span className="text-gray-500 underline">계정이 없으신가요?</span>
