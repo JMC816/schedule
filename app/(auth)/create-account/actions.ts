@@ -3,10 +3,10 @@ import { PASSWORD_REGEX, PASSWORD_REGEX_ERROR } from "@/lib/constans";
 import { z } from "zod";
 
 const formScheam = z.object({
-  id: z
+  username: z
     .string({
-      invalid_type_error: "아이디는 문자형태 입니다.",
-      required_error: "아이디는 필수 입니다.",
+      invalid_type_error: "닉네임는 문자형태 입니다.",
+      required_error: "닉네임은 필수 입니다.",
     })
     .min(3, "너무 짧습니다.")
     .toLowerCase()
@@ -18,8 +18,8 @@ const formScheam = z.object({
 
 export async function createAccount(prevState: any, formData: FormData) {
   const data = {
+    username: formData.get("username"),
     email: formData.get("email"),
-    id: formData.get("id"),
     password: formData.get("password"),
   };
   const result = formScheam.safeParse(data);
