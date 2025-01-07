@@ -8,7 +8,7 @@ import {
 import { z } from "zod";
 
 const formSchema = z.object({
-  id: z.string({ required_error: "아이디는 필수입니다." }).toLowerCase(),
+  username: z.string({ required_error: "넥네임은 필수입니다." }).toLowerCase(),
   password: z
     .string({ required_error: "비밀번호는 필수입니다." })
     .min(PASSWORD_MIN_LENGTH)
@@ -17,7 +17,7 @@ const formSchema = z.object({
 
 export async function login(prevState: any, formData: FormData) {
   const data = {
-    id: formData.get("id"),
+    username: formData.get("username"),
     password: formData.get("password"),
   };
   const result = formSchema.safeParse(data);
