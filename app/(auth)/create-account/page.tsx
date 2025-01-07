@@ -15,18 +15,18 @@ export default function Create_Account() {
         className="flex flex-col w-full gap-2 p-5 bg-neutral-700 rounded-xl"
       >
         <FormInput
+          name="username"
+          required
+          type="text"
+          placeholder="닉네임"
+          errors={state?.fieldErrors.username}
+        />
+        <FormInput
           name="email"
           required
           type="email"
           placeholder="이메일"
           errors={state?.fieldErrors.email}
-        />
-        <FormInput
-          name="id"
-          required
-          type="id"
-          placeholder="아이디"
-          errors={state?.fieldErrors.id}
         />
         <FormInput
           name="password"
