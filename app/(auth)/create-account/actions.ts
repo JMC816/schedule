@@ -1,7 +1,12 @@
 "use server";
-import { PASSWORD_REGEX, PASSWORD_REGEX_ERROR } from "@/lib/constans";
+import {
+  PASSWORD_MIN_LENGTH,
+  PASSWORD_REGEX,
+  PASSWORD_REGEX_ERROR,
+} from "@/lib/constans";
 import db from "@/lib/db";
 import { z } from "zod";
+import bcrypt from "bcrypt";
 
 const checkUniqueUsername = async (username: string) => {
   const user = await db.user.findUnique({
@@ -52,7 +57,10 @@ const formScheam = z.object({
     .trim()
     .toLowerCase()
     .refine(checkUniqueEmail, "이미 메일이 존재합니다."),
-  password: z.string().min(10).regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
+  password: z
+    .string()
+    .min(PASSWORD_MIN_LENGTH)
+    .regex(PASSWORD_REGEX, PASSWORD_REGEX_ERROR),
 });
 
 export async function createAccount(prevState: any, formData: FormData) {
@@ -63,9 +71,16 @@ export async function createAccount(prevState: any, formData: FormData) {
   };
   const result = await formScheam.safeParseAsync(data);
   if (!result.success) {
-    console.log(result.error.flatten());
     return result.error.flatten();
   } else {
-    console.log(result.data);
+    const hashedPassword = await bcrypt.hash(result.data.password, 12);
+    const user = await db.user.create({
+      data: {
+        username: result.data.username,
+        email: result.data.email,
+        password: hashedPassword,
+      },
+    });
+    console.log(user);
   }
 }
