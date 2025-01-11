@@ -15,11 +15,11 @@ export default function Login() {
         className="flex flex-col w-full gap-2 p-5 bg-neutral-700 rounded-xl"
       >
         <FormInput
-          name="username"
-          type="text"
+          name="email"
+          type="email"
           required
-          placeholder="닉네임"
-          errors={state?.fieldErrors.username}
+          placeholder="이메일"
+          errors={state?.fieldErrors.email}
         />
         <FormInput
           name="password"
