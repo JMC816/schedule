@@ -16,7 +16,7 @@ export default function FormInput({
   return (
     <div>
       <input
-        className="p-1 text-black rounded-sm"
+        className="w-full p-1 text-black rounded-sm"
         type={type}
         placeholder={placeholder}
         required={required}
