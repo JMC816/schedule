@@ -7,6 +7,8 @@ import {
 import db from "@/lib/db";
 import { z } from "zod";
 import bcrypt from "bcrypt";
+import { redirect } from "next/navigation";
+import getSession from "@/lib/session";
 
 const checkUniqueUsername = async (username: string) => {
   const user = await db.user.findUnique({
@@ -80,7 +82,13 @@ export async function createAccount(prevState: any, formData: FormData) {
         email: result.data.email,
         password: hashedPassword,
       },
+      select: {
+        id: true,
+      },
     });
-    console.log(user);
+    const session = await getSession();
+    session.id = user.id;
+    await session.save();
+    redirect("/todo");
   }
 }
