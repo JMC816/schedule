@@ -3,6 +3,7 @@ import withPWA from "@ducanh2912/next-pwa";
 /** @type {import('next').NextConfig} */
 const nextConfig = {
   reactStrictMode: true,
+  crossOrigin: "use-credentials",
 };
 
 export default withPWA({
@@ -11,7 +12,3 @@ export default withPWA({
   register: true,
   skipWaiting: true,
 });
-
-module.exports = {
-  crossOrigin: "use-credentials",
-};
