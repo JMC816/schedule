@@ -17,8 +17,8 @@ export const metadata: Metadata = {
   description: "오늘 할 일과 스케줄을 기록할 수 있는 서비스",
   manifest: "/manifest.ts",
   icons: [
-    { rel: "icon", url: "/icons/192.png", sizes: "192x192" },
-    { rel: "icon", url: "/icons/512.png", sizes: "512x512" },
+    { rel: "icon", url: "icons/192.png", sizes: "192x192" },
+    { rel: "icon", url: "icons/512.png", sizes: "512x512" },
   ],
 };
 
@@ -29,6 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
+      <head>
+        <link
+          rel="manifest"
+          href="/manifest.json"
+          crossOrigin="use-credentials"
+        />
+      </head>
       <body className={`${inter.className} mx-auto bg-neutral-950 text-white `}>
         {children}
       </body>
