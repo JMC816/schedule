@@ -11,3 +11,7 @@ export default withPWA({
   register: true,
   skipWaiting: true,
 });
+
+module.exports = {
+  crossOrigin: "use-credentials",
+};
