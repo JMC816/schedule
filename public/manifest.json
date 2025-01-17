@@ -7,7 +7,7 @@
   "display": "standalone",
   "background_color": "#FFFFFF",
   "theme_color": "#000000",
-  "lang:": "ko-KR",
+  "lang": "ko-KR",
   "icons": [
     {
       "src": "/icons/192.png",
@@ -18,7 +18,7 @@
     {
       "src": "/icons/512.png",
       "sizes": "512x512",
-      " type": "image/png"
+      "type": "image/png"
     }
   ]
 }
