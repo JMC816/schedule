@@ -9,12 +9,15 @@ datasource db {
 }
 
 model User {
-  id        Int      @id @default(autoincrement())
-  username  String   @unique
-  email     String   @unique
-  password  String
-  create_at DateTime @default(now())
-  update_at DateTime @updatedAt
+  id             Int              @id @default(autoincrement())
+  username       String           @unique
+  email          String           @unique
+  password       String
+  create_at      DateTime         @default(now())
+  update_at      DateTime         @updatedAt
+  ToDos          ToDos[]
+  CompletedTodos CompletedTodos[]
+  ScheduleList   ScheduleList[]
 }
 
 model ToDo {
@@ -28,6 +31,8 @@ model ToDos {
   text   String
   todo   ToDo   @relation(fields: [toDoId], references: [id])
   toDoId Int
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model CompletedTodos {
@@ -35,6 +40,8 @@ model CompletedTodos {
   text   String
   todo   ToDo   @relation(fields: [toDoId], references: [id])
   toDoId Int
+  user   User   @relation(fields: [userId], references: [id])
+  userId Int
 }
 
 model ScheduleList {
@@ -44,4 +51,6 @@ model ScheduleList {
   dayStart  String
   dayEnd    String
   text      String
+  user      User   @relation(fields: [userId], references: [id])
+  userId    Int
 }
