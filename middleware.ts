@@ -9,6 +9,7 @@ const publicOnlyUrls: Routes = {
   "/": true,
   "/login": true,
   "/create-account": true,
+  "/manifest": true,
 };
 
 export async function middleware(request: NextRequest) {
@@ -26,5 +27,5 @@ export async function middleware(request: NextRequest) {
 }
 
 export const config = {
-  matcher: ["/((?!api|_next/static|_next/image|icons|favicon.ico).*)"],
+  matcher: ["/((?!api|_next/static|_next/image|icons|favicon.ico|manifest).*)"],
 };
