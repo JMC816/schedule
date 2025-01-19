@@ -2,6 +2,7 @@
 
 import { CheckedProps } from "@/components/todo/todo";
 import db from "@/lib/db";
+import getSession from "@/lib/session";
 import { revalidatePath } from "next/cache";
 
 export async function createToDo(date: string) {
@@ -29,10 +30,12 @@ export async function createToDo(date: string) {
 
 export async function uploadTodos(formdata: FormData, data: string) {
   const text = formdata.get("todo") as string;
+  const session = await getSession();
   await db.toDos.create({
     data: {
       text,
       toDoId: parseInt(data),
+      userId: session.id!,
     },
   });
   revalidatePath("/");
@@ -44,27 +47,32 @@ export async function getTodos() {
 }
 
 export async function deleteTodos(id: number) {
+  const session = await getSession();
   if (!id) {
     return;
   }
   await db.toDos.deleteMany({
     where: {
       id,
+      userId: session.id!,
     },
   });
   revalidatePath("/");
 }
 
 export async function checkedTodos(todo: CheckedProps) {
+  const session = await getSession();
   try {
     await db.toDos.deleteMany({
       where: {
         id: todo.id,
+        userId: session.id,
       },
     });
     const existCompletedTodos = await db.completedTodos.findMany({
       where: {
         id: todo.id,
+        userId: session.id,
       },
     });
     if (existCompletedTodos.length === 0) {
@@ -73,6 +81,7 @@ export async function checkedTodos(todo: CheckedProps) {
           id: todo.id,
           text: todo.text,
           toDoId: todo.toDoId,
+          userId: session.id!,
         },
       });
     }
@@ -88,12 +97,14 @@ export async function getCompletedTodos() {
 }
 
 export async function deleteCompletedTodos(id: number) {
+  const session = await getSession();
   if (!id) {
     return;
   }
   await db.completedTodos.deleteMany({
     where: {
       id,
+      userId: session.id!,
     },
   });
   revalidatePath("/");

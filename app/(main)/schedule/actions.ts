@@ -1,6 +1,7 @@
 "use server";
 
 import db from "@/lib/db";
+import getSession from "@/lib/session";
 import { revalidatePath } from "next/cache";
 
 export async function createSchedule(
@@ -14,6 +15,7 @@ export async function createSchedule(
 ) {
   try {
     const text = formdata.get("schedule") as string;
+    const session = await getSession();
     await db.scheduleList.create({
       data: {
         timeStart: hourStart + minuteStart,
@@ -21,6 +23,7 @@ export async function createSchedule(
         dayStart,
         dayEnd,
         text,
+        userId: session.id!,
       },
     });
   } catch (e) {
@@ -35,10 +38,12 @@ export async function getScheduleList() {
 }
 
 export async function deleteScheduleList(id: number) {
+  const session = await getSession();
   try {
     await db.scheduleList.delete({
       where: {
         id,
+        userId: session.id!,
       },
     });
   } catch (e) {
