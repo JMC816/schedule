@@ -12,12 +12,17 @@ export interface ToDosProps {
     id: number;
     text: string;
     toDoId: number;
+    userId: number;
   }[];
   completedTodos: {
     id: number;
     text: string;
     toDoId: number;
+    userId: number;
   }[];
+  session: {
+    id?: number;
+  };
 }
 
 export interface CheckedProps {
@@ -26,7 +31,11 @@ export interface CheckedProps {
   toDoId: number;
 }
 
-export default function ToDo_Box({ todos, completedTodos }: ToDosProps) {
+export default function ToDo_Box({
+  todos,
+  completedTodos,
+  session,
+}: ToDosProps) {
   const { changeModalState } = useModalStore();
   const { setSlide, slide } = useToDoListStore();
   const { setCheckToDo } = useToDoListStore();
@@ -54,10 +63,10 @@ export default function ToDo_Box({ todos, completedTodos }: ToDosProps) {
   };
 
   const filteredTodos = todos.filter(
-    (todos) => todos.toDoId === parseInt(date)
+    (todos) => todos.toDoId === parseInt(date) && todos.userId === session.id!
   );
   const filteredCompletedTodos = completedTodos.filter(
-    (todos) => todos.toDoId === parseInt(date)
+    (todos) => todos.toDoId === parseInt(date) && todos.userId === session.id!
   );
 
   return (
@@ -72,6 +81,7 @@ export default function ToDo_Box({ todos, completedTodos }: ToDosProps) {
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <Calendar
+                session={session}
                 completedTodos={completedTodos}
                 className="flex justify-center mt-[85px] mb-2 ml-6 mr-6 rounded-md"
               />
@@ -113,7 +123,13 @@ export default function ToDo_Box({ todos, completedTodos }: ToDosProps) {
           </div>
         )}
       </AnimatePresence>
-      {slide || <ToDoList todos={todos} completedTodos={completedTodos} />}
+      {slide || (
+        <ToDoList
+          session={session}
+          todos={todos}
+          completedTodos={completedTodos}
+        />
+      )}
       <div
         onClick={() => changeModalState("todoModal")}
         className="fixed bottom-0 w-12 mb-20 rounded-full right-5 bg-neutral-500 active:bg-neutral-700"

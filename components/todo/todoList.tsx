@@ -12,7 +12,11 @@ import { motion, AnimatePresence } from "framer-motion";
 import { useChartStore, useStore, useToDoListStore } from "@/store";
 import { CheckedProps, ToDosProps } from "./todo";
 
-export default function ToDoList({ todos, completedTodos }: ToDosProps) {
+export default function ToDoList({
+  todos,
+  completedTodos,
+  session,
+}: ToDosProps) {
   const { date } = useStore();
   const { setChartData } = useChartStore();
   const { checkToDo, setCheckToDo } = useToDoListStore();
@@ -35,8 +39,10 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
 
       for (let month = 1; month <= 12; month++) {
         const formatMonth = await formatChartDate(month);
-        const filteredTodo = await chartData.filter((todo) =>
-          String(todo.toDoId).includes(formatMonth)
+        const filteredTodo = await chartData.filter(
+          (todo) =>
+            String(todo.toDoId).includes(formatMonth) &&
+            todo.userId === session.id!
         );
 
         const count = await filteredTodo.map((todo) => todo.toDoId);
@@ -55,15 +61,15 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
   }, [completedTodos, setChartData]);
 
   const filteredTodos = todos.filter(
-    (todos) => todos.toDoId === parseInt(date)
+    (todos) => todos.toDoId === parseInt(date) && todos.userId === session.id!
   );
   const filteredCompletedTodos = completedTodos.filter(
-    (todos) => todos.toDoId === parseInt(date)
+    (todos) => todos.toDoId === parseInt(date) && todos.userId === session.id!
   );
 
   const onDeleteTodos = (id: number) => {
     todos.map(async (todos) => {
-      if (todos.id === id) {
+      if (todos.id === id && todos.userId === session.id!) {
         await deleteTodos(id);
       }
     });
@@ -75,7 +81,7 @@ export default function ToDoList({ todos, completedTodos }: ToDosProps) {
 
   const onDeleteCompletedTodos = (id: number) => {
     completedTodos.map(async (todos) => {
-      if (todos.id == id) {
+      if (todos.id == id && todos.userId === session.id!) {
         await deleteCompletedTodos(id);
       }
     });

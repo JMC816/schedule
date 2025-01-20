@@ -20,17 +20,25 @@ export interface ScheduleListProps {
     dayStart: string;
     dayEnd: string;
     text: string;
+    userId: number;
   }[];
+  session: {
+    id?: number;
+  };
 }
 
-export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
+export default function Schedule_Box({
+  scheduleLists,
+  session,
+}: ScheduleListProps) {
   const { range, setRange } = useRangeStore();
   const { changeModalState } = useModalStore();
   const { day } = useScheduleStore();
   const [scheduleList, setScheduleList] = useState(true);
 
   const filterDayList = scheduleLists.filter(
-    (list) => list.dayStart <= day && list.dayEnd >= day
+    (list) =>
+      list.dayStart <= day && list.dayEnd >= day && list.userId === session.id!
   );
 
   const onClickList = () => {
@@ -56,6 +64,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
               transition={{ duration: 0.4, ease: "easeInOut" }}
             >
               <Schedule_Calendar
+                session={session}
                 scheduleLists={scheduleLists}
                 mode="range"
                 selected={range}
@@ -84,7 +93,7 @@ export default function Schedule_Box({ scheduleLists }: ScheduleListProps) {
       </AnimatePresence>
       {scheduleList || (
         <div className="mt-20 mb-20 ml-7 mr-7">
-          <ScheduleList scheduleLists={scheduleLists} />
+          <ScheduleList session={session} scheduleLists={scheduleLists} />
         </div>
       )}
 

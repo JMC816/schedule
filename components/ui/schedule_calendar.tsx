@@ -17,6 +17,7 @@ function Schedule_Calendar({
   classNames,
   showOutsideDays = true,
   scheduleLists,
+  session,
   ...props
 }: ScheduleProps) {
   const { setDay } = useScheduleStore();
@@ -82,7 +83,8 @@ function Schedule_Calendar({
                 className="absolute flex justify-center h-2 top-6"
               >
                 {list.dayStart <= formatDate(date) &&
-                list.dayEnd >= formatDate(date) ? (
+                list.dayEnd >= formatDate(date) &&
+                list.userId === session.id! ? (
                   <div className="w-2 h-2 rounded-full bg-sky-500" />
                 ) : null}
               </div>

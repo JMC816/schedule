@@ -10,15 +10,18 @@ import { createToDo } from "@/app/(main)/todo/actions";
 import { ToDosProps } from "../todo/todo";
 import { useStore } from "@/store";
 type MyTodosProps = Pick<ToDosProps, "completedTodos">;
+type MySessionProps = Pick<ToDosProps, "session">;
 
 export type CalendarProps = React.ComponentProps<typeof DayPicker> &
-  MyTodosProps;
+  MyTodosProps &
+  MySessionProps;
 
 function Calendar({
   className,
   classNames,
   showOutsideDays = true,
   completedTodos,
+  session,
   ...props
 }: CalendarProps) {
   const setDate = useStore((state) => state.setDate);
@@ -31,7 +34,11 @@ function Calendar({
     setDate(`${year}${month}${day}`);
   };
 
-  const individualDate = completedTodos.reduce<Record<string, number>>(
+  const filteredCompletedTodos = completedTodos.filter(
+    (todos) => todos.userId === session.id!
+  );
+
+  const individualDate = filteredCompletedTodos.reduce<Record<string, number>>(
     (acc, todo) => {
       const year = String(todo.toDoId).slice(0, 4);
       const month = String(todo.toDoId).slice(4, 6).padStart(2, "0");

@@ -7,11 +7,15 @@ import React from "react";
 import { deleteScheduleList } from "@/app/(main)/schedule/actions";
 import { useScheduleStore } from "@/store";
 
-export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
+export default function ScheduleList({
+  scheduleLists,
+  session,
+}: ScheduleListProps) {
   const { day } = useScheduleStore();
 
   const filterList = scheduleLists.filter(
-    (list) => list.dayStart <= day && list.dayEnd >= day
+    (list) =>
+      list.dayStart <= day && list.dayEnd >= day && list.userId === session.id!
   );
 
   const weeks = [
@@ -35,7 +39,7 @@ export default function ScheduleList({ scheduleLists }: ScheduleListProps) {
 
   const onDeleteList = (id: number) => {
     filterList.map(async (list) => {
-      if (list.id == id) {
+      if (list.id === id && list.userId === session.id!) {
         await deleteScheduleList(id);
       }
     });
