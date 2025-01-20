@@ -28,11 +28,6 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <head>
-        <link rel="/manifest" href="/manifest.json" />
-        <link rel="icon" href="/icons/192.png" sizes="192x192" />
-        <link rel="icon" href="/icons/512.png" sizes="512x512" />
-      </head>
       <body className={`${inter.className} mx-auto bg-neutral-950 text-white `}>
         {children}
       </body>
