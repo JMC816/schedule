@@ -1,15 +1,14 @@
 "use client";
 
 import { TrashIcon } from "@heroicons/react/16/solid";
-import React, { useEffect } from "react";
+import React from "react";
 import {
   checkedTodos,
   deleteCompletedTodos,
   deleteTodos,
-  getCompletedTodos,
 } from "@/app/(main)/todo/actions";
 import { motion, AnimatePresence } from "framer-motion";
-import { useChartStore, useStore, useToDoListStore } from "@/store";
+import { useStore, useToDoListStore } from "@/store";
 import { CheckedProps, ToDosProps } from "./todo";
 
 export default function ToDoList({
@@ -18,47 +17,7 @@ export default function ToDoList({
   session,
 }: ToDosProps) {
   const { date } = useStore();
-  const { setChartData } = useChartStore();
   const { checkToDo, setCheckToDo } = useToDoListStore();
-
-  useEffect(() => {
-    const formatChartDate = (month: number) => {
-      const today = new Date()
-        .toLocaleDateString()
-        .replace(/\./g, "")
-        .split(" ")
-        .join("");
-      const year = today.slice(0, 4);
-      const months = String(month).padStart(2, "0");
-      return `${year}${months}`;
-    };
-
-    const updateChartData = async () => {
-      const monthlyData: Record<string, Record<string, number>> = {};
-      const chartData = await getCompletedTodos();
-
-      for (let month = 1; month <= 12; month++) {
-        const formatMonth = await formatChartDate(month);
-        const filteredTodo = await chartData.filter(
-          (todo) =>
-            String(todo.toDoId).includes(formatMonth) &&
-            todo.userId === session.id!
-        );
-
-        const count = await filteredTodo.map((todo) => todo.toDoId);
-        const result = await count.reduce(
-          (accu: Record<string, number>, curr: number) => {
-            accu[curr] = (accu[curr] || 0) + 1;
-            return accu;
-          },
-          {}
-        );
-        monthlyData[formatMonth] = result;
-      }
-      setChartData(monthlyData);
-    };
-    updateChartData();
-  }, [completedTodos, setChartData]);
 
   const filteredTodos = todos.filter(
     (todos) => todos.toDoId === parseInt(date) && todos.userId === session.id!

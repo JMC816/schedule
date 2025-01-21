@@ -3,7 +3,12 @@
 import { AnimatePresence, motion } from "framer-motion";
 import ToDoList from "./todoList";
 import { Calendar } from "../ui/calendar";
-import { useModalStore, useStore, useToDoListStore } from "@/store";
+import {
+  useChartStore,
+  useModalStore,
+  useStore,
+  useToDoListStore,
+} from "@/store";
 import { PlusIcon } from "@heroicons/react/16/solid";
 import { useEffect } from "react";
 
@@ -40,6 +45,7 @@ export default function ToDo_Box({
   const { setSlide, slide } = useToDoListStore();
   const { setCheckToDo } = useToDoListStore();
   const { date, setDate } = useStore();
+  const { setChartData } = useChartStore();
 
   useEffect(() => {
     if (!date) {
@@ -50,6 +56,44 @@ export default function ToDo_Box({
       setDate(`${year}${month}${day}`);
     }
   }, [date, setDate]);
+
+  useEffect(() => {
+    const formatChartDate = (month: number) => {
+      const today = new Date()
+        .toLocaleDateString()
+        .replace(/\./g, "")
+        .split(" ")
+        .join("");
+      const year = today.slice(0, 4);
+      const months = String(month).padStart(2, "0");
+      return `${year}${months}`;
+    };
+
+    const updateChartData = async () => {
+      const monthlyData: Record<string, Record<string, number>> = {};
+
+      for (let month = 1; month <= 12; month++) {
+        const formatMonth = await formatChartDate(month);
+        const filteredTodo = await completedTodos.filter(
+          (todo) =>
+            String(todo.toDoId).includes(formatMonth) &&
+            todo.userId === session.id!
+        );
+
+        const count = await filteredTodo.map((todo) => todo.toDoId);
+        const result = await count.reduce(
+          (accu: Record<string, number>, curr: number) => {
+            accu[curr] = (accu[curr] || 0) + 1;
+            return accu;
+          },
+          {}
+        );
+        monthlyData[formatMonth] = result;
+      }
+      setChartData(monthlyData);
+    };
+    updateChartData();
+  }, [completedTodos, setChartData]);
 
   const onClickToDo = () => {
     setSlide(true);
