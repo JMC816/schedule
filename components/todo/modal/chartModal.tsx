@@ -31,12 +31,8 @@ export default function ChartModal() {
   };
 
   const months = () => {
-    const today = new Date()
-      .toLocaleDateString()
-      .replace(/\./g, "")
-      .split(" ")
-      .join("");
-    const month = today.slice(4, 6);
+    const today = new Date();
+    const month = (today.getMonth() + 1).toString().padStart(2, "0");
     return `${month}`;
   };
 
