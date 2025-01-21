@@ -43,12 +43,11 @@ export default function ToDo_Box({
 
   useEffect(() => {
     if (!date) {
-      const today = new Date()
-        .toLocaleDateString()
-        .replace(/\./g, "")
-        .split(" ")
-        .join("");
-      setDate(today);
+      const today = new Date();
+      const year = today.getFullYear();
+      const month = (today.getMonth() + 1).toString().padStart(2, "0");
+      const day = today.getDate().toString().padStart(2, "0");
+      setDate(`${year}${month}${day}`);
     }
   }, [date, setDate]);
 
