@@ -9,24 +9,17 @@ import { ApexOptions } from "apexcharts";
 export default function ChartModal() {
   const { chartModal } = useModalStore();
   const { chartData } = useChartStore();
+
   const formatToDay = () => {
-    const today = new Date()
-      .toLocaleDateString()
-      .replace(/\./g, "")
-      .split(" ")
-      .join("");
-    const year = today.slice(0, 4);
-    const months = today.slice(4, 6).padStart(2, "0");
+    const today = new Date();
+    const year = today.getFullYear();
+    const months = (today.getMonth() + 1).toString().padStart(2, "0");
     return `${year}${months}`;
   };
 
   const years = () => {
-    const today = new Date()
-      .toLocaleDateString()
-      .replace(/\./g, "")
-      .split(" ")
-      .join("");
-    const year = today.slice(0, 4);
+    const today = new Date();
+    const year = today.getFullYear();
     return `${year}`;
   };
 
