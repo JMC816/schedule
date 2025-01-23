@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { getUser, logOut } from "./actions";
 
 export default async function Set() {
@@ -21,6 +22,15 @@ export default async function Set() {
           <div className="flex justify-between p-4 rounded-lg bg-neutral-700">
             <span>문의 및 피드백</span>
             <span className="text-gray-500">(출시 예정)</span>
+          </div>
+          <div className="text-center text-gray-500 underline">
+            <Link
+              href={
+                "https://doc-hosting.flycricket.io/schedule-privacy-policy/160e2d58-fc8f-454c-893b-dd3c01d2ec34/privacy"
+              }
+            >
+              개인정보처리방침
+            </Link>
           </div>
         </div>
       </div>
