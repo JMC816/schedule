@@ -29,11 +29,13 @@ export default function RootLayout({
 }>) {
   return (
     <html lang="en">
-      <Script
-        async
-        src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_ADSENCE}`}
-        crossOrigin="anonymous"
-      ></Script>
+      <head>
+        <Script
+          async
+          src={`https://pagead2.googlesyndication.com/pagead/js/adsbygoogle.js?client=${process.env.GOOGLE_ADSENCE}`}
+          crossOrigin="anonymous"
+        ></Script>
+      </head>
       <body className={`${inter.className} mx-auto bg-neutral-950 text-white `}>
         {children}
       </body>
